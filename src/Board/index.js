@@ -75,9 +75,6 @@ function Board({
       <BoardPiecesGrid width={squareWidth}>
         {(orientation === "w" ? position : position.reverse()).map(
           ({ type, color, square }, i) => {
-            console.log("TCL: i", i);
-            console.log("TCL: square", square);
-            console.log("---");
             return (
               <SquareContainer key={i}>
                 {i % 8 === 0 && showSquareLetters && (
