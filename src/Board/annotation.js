@@ -23,6 +23,15 @@ const BottomRender = styled(CommonAlphabetStyling)`
   justify-content: center;
 `;
 
+/**
+ * Annotation component, draws the numbers on the left side of the board,
+ * and alphabets on the bottom of the board, depending on the align property.
+ * The square property has the square notation (Eg: a8), where the 'a' goes to
+ * the bottom and '8' goes on the left side.
+ *
+ * @param {*} { square, align }
+ * @returns
+ */
 function Annotation({ square, align }) {
   const splitChars = square.split("");
   const charToDisplay =
