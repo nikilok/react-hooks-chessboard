@@ -1,18 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { COLORS } from "../common/default-theme";
 import styled from "styled-components";
-import wp from "../icons/classic/wp.png";
-import bp from "../icons/classic/bp.webp";
-import bb from "../icons/classic/bb.webp";
-import wb from "../icons/classic/wb.png";
-import bk from "../icons/classic/bk.png";
-import wk from "../icons/classic/wk.png";
-import bn from "../icons/classic/bn.webp";
-import wn from "../icons/classic/wn.webp";
-import bq from "../icons/classic/bq.png";
-import wq from "../icons/classic/wq.webp";
-import wr from "../icons/classic/wr.webp";
-import br from "../icons/classic/br.png";
+import BlackBishop from "../icons/classic/bb.webp";
+import BlackKing from "../icons/classic/bk.png";
+import BlackKnight from "../icons/classic/bn.webp";
+import BlackPawn from "../icons/classic/bp.webp";
+import BlackQueen from "../icons/classic/bq.png";
+import BlackRook from "../icons/classic/br.png";
+import WhiteBishop from "../icons/classic/wb.png";
+import WhiteKing from "../icons/classic/wk.png";
+import WhiteKnight from "../icons/classic/wn.webp";
+import WhitePawn from "../icons/classic/wp.png";
+import WhiteQueen from "../icons/classic/wq.webp";
+import WhiteRook from "../icons/classic/wr.webp";
 
 const Container = styled.div`
   ${props => `
@@ -66,29 +66,29 @@ function BoardPiece({
   function getPieceImg(type, color) {
     switch (color + type) {
       case "wp":
-        return wp;
+        return WhitePawn;
       case "bp":
-        return bp;
+        return BlackPawn;
       case "bb":
-        return bb;
+        return BlackBishop;
       case "wb":
-        return wb;
+        return WhiteBishop;
       case "bk":
-        return bk;
+        return BlackKing;
       case "wk":
-        return wk;
+        return WhiteKing;
       case "bn":
-        return bn;
+        return BlackKnight;
       case "wn":
-        return wn;
+        return WhiteKnight;
       case "bq":
-        return bq;
+        return BlackQueen;
       case "wq":
-        return wq;
+        return WhiteQueen;
       case "wr":
-        return wr;
+        return WhiteRook;
       case "br":
-        return br;
+        return BlackRook;
     }
   }
   function clickHandle() {
