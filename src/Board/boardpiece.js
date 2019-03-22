@@ -35,7 +35,7 @@ const Piece = styled.img`
   width: ${props => props.width};
 `;
 /**
- * This Component is responsible for rendering the Chess pieces,
+ * BoardPiece Component is responsible for rendering the Chess pieces,
  * along with the square from and to highlight colors.
  * It imports all the images for the chess pieces and inlines it.
  *

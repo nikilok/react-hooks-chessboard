@@ -12,7 +12,7 @@ const SquareBlock = styled.div`
 `;
 
 /**
- * This component renders the individual black and white squares.
+ * Square component renders the individual black and white squares.
  *
  * @param {*} { backgroundColor, children }
  * @returns
