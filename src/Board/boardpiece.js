@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { COLORS } from "../common/default-theme";
 import styled from "styled-components";
 import BlackBishop from "../icons/classic/bb.webp";
@@ -22,7 +22,9 @@ const Container = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: ${props.color}
+  background-color: ${props.color};
+  width: 100%;
+  height: 100%;
   `
       : ""
   }

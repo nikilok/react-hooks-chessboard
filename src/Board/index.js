@@ -2,6 +2,8 @@ import React from "react";
 import styled from "styled-components";
 import Square from "./square";
 import BoardPiece from "./boardpiece";
+import Annotation from "./annotation";
+import { COLORS } from "../common/default-theme";
 
 const BoardContainer = styled.div`
   position: relative;
@@ -11,7 +13,7 @@ const ChessBoard = styled.div`
   display: grid;
   grid-template-columns: repeat(8, ${props => props.width});
   grid-template-rows: repeat(8, ${props => props.width});
-  border: 4px solid #13161b;
+  border: 4px solid ${COLORS.BOARDBORDER};
 `;
 
 const BoardPiecesGrid = styled.div`
@@ -22,6 +24,10 @@ const BoardPiecesGrid = styled.div`
   grid-template-columns: repeat(8, ${props => props.width});
   grid-template-rows: repeat(8, ${props => props.width});
   border: 4px solid transparent;
+`;
+
+const SquareContainer = styled.div`
+  position: relative;
 `;
 /**
  * Board Component, renders a chess board.
@@ -43,7 +49,7 @@ function Board({
   position,
   width,
   lastMoveStatus,
-  config: { showPadding, showAlphaNumeric, orientation = "w" }
+  config: { showPadding, showSquareLetters, orientation = "w" }
 }) {
   const squareWidth = `${width / 8}px`;
   // prettier-ignore
@@ -57,7 +63,8 @@ function Board({
                             0, 1, 0, 1, 0, 1, 0, 1, 
                             1, 0, 1, 0, 1, 0, 1, 0
                           ];
-
+  // const verticalNotations = [0, 8, 16, 24, 32, 40, 48, 56];
+  // const horizontalNotations = 56;
   console.log("TCL: Board -> lastMoveStatus", lastMoveStatus);
 
   return (
@@ -67,18 +74,30 @@ function Board({
           return <Square key={i} backgroundColor={color} />;
         })}
       </ChessBoard>
+
       <BoardPiecesGrid width={squareWidth}>
         {(orientation === "w" ? position : position.reverse()).map(
           ({ type, color, square }, i) => {
+            console.log("TCL: i", i);
+            console.log("TCL: square", square);
+            console.log("---");
             return (
-              <BoardPiece
-                key={i}
-                square={square}
-                color={color}
-                type={type}
-                lastMoveStatus={lastMoveStatus}
-                squareWidth={squareWidth}
-              />
+              <SquareContainer key={i}>
+                {i % 8 === 0 && showSquareLetters && (
+                  <Annotation square={square} align="left" />
+                )}
+                {i >= 56 && showSquareLetters && (
+                  <Annotation square={square} align="bottom" />
+                )}
+
+                <BoardPiece
+                  square={square}
+                  color={color}
+                  type={type}
+                  lastMoveStatus={lastMoveStatus}
+                  squareWidth={squareWidth}
+                />
+              </SquareContainer>
             );
           }
         )}

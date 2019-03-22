@@ -68,7 +68,7 @@ function App() {
           width="800"
           config={{
             showPadding: true,
-            showAlphaNumeric: true,
+            showSquareLetters: true,
             orientation: "b"
           }}
           position={state.board}
