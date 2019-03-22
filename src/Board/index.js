@@ -63,9 +63,6 @@ function Board({
                             0, 1, 0, 1, 0, 1, 0, 1, 
                             1, 0, 1, 0, 1, 0, 1, 0
                           ];
-  // const verticalNotations = [0, 8, 16, 24, 32, 40, 48, 56];
-  // const horizontalNotations = 56;
-  console.log("TCL: Board -> lastMoveStatus", lastMoveStatus);
 
   return (
     <BoardContainer>
