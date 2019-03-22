@@ -3,7 +3,6 @@ import chessReducer from "./reducer/chessreducer";
 import * as types from "./reducer/constants";
 import styled from "styled-components";
 import Board from "./Board";
-import Chess from "chess.js";
 
 const Container = styled.div`
   text-align: center;
