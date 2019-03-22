@@ -49,7 +49,12 @@ function Board({
   position,
   width,
   lastMoveStatus,
-  config: { showPadding, showSquareLetters, orientation = "w" }
+  config: {
+    showPadding,
+    showSquareLetters = true,
+    orientation = "w",
+    showMoveHighlights = true
+  }
 }) {
   const squareWidth = `${width / 8}px`;
   // prettier-ignore
@@ -90,6 +95,7 @@ function Board({
                   type={type}
                   lastMoveStatus={lastMoveStatus}
                   squareWidth={squareWidth}
+                  showMoveHighlights={showMoveHighlights}
                 />
               </SquareContainer>
             );

@@ -31,8 +31,6 @@ const Container = styled.div`
   `};
 `;
 
-const SquareHighlight = styled.div``;
-
 const Piece = styled.img`
   width: ${props => props.width};
 `;
@@ -47,6 +45,7 @@ const Piece = styled.img`
  *   color,
  *   squareWidth,
  *   lastMoveStatus = { from: "", to: "" }
+ *   showMoveHighlights (true | false)
  * }
  * @returns
  */
@@ -55,7 +54,8 @@ function BoardPiece({
   type,
   color,
   squareWidth,
-  lastMoveStatus = { from: "", to: "" }
+  lastMoveStatus = { from: "", to: "" },
+  showMoveHighlights
 }) {
   /**
    * getPieceImg Fn returns back the Image given the type Notation and color
@@ -91,6 +91,8 @@ function BoardPiece({
         return WhiteRook;
       case "br":
         return BlackRook;
+      default:
+        return;
     }
   }
   function clickHandle() {
@@ -103,13 +105,15 @@ function BoardPiece({
   const imgSrc = type && getPieceImg(type, color);
   const { from, to } = lastMoveStatus;
 
-  let squareHighlightColor;
-  if (from === square) {
-    squareHighlightColor = COLORS.MOVEFROM;
-  } else if (to === square) {
-    squareHighlightColor = COLORS.MOVETO;
-  } else {
-    squareHighlightColor = undefined;
+  let squareHighlightColor = "";
+  if (showMoveHighlights) {
+    if (from === square) {
+      squareHighlightColor = COLORS.MOVEFROM;
+    } else if (to === square) {
+      squareHighlightColor = COLORS.MOVETO;
+    } else {
+      squareHighlightColor = undefined;
+    }
   }
 
   const PieceContainer = type && <Piece width={squareWidth} src={imgSrc} />;

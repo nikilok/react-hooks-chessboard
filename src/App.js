@@ -18,7 +18,7 @@ const TableBackground = styled.div`
 `;
 
 function App() {
-  const [state, dispatch] = useReducer(chessReducer, { board: new Array() });
+  const [state, dispatch] = useReducer(chessReducer, { board: [] });
 
   /** Example moves only for testing a sequence of moves */
   const moves = [
@@ -69,7 +69,8 @@ function App() {
           config={{
             showPadding: true,
             showSquareLetters: true,
-            orientation: "b"
+            orientation: "b",
+            showMoveHighlights: true
           }}
           position={state.board}
           lastMoveStatus={state.lastMoveStatus}
