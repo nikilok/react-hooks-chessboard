@@ -6,6 +6,7 @@ import BoardPiece from "./boardpiece";
 const BoardContainer = styled.div`
   position: relative;
 `;
+
 const ChessBoard = styled.div`
   display: grid;
   grid-template-columns: repeat(8, ${props => props.width});
@@ -22,7 +23,22 @@ const BoardPiecesGrid = styled.div`
   grid-template-rows: repeat(8, ${props => props.width});
   border: 4px solid transparent;
 `;
-
+/**
+ * Board Component, renders a chess board.
+ * position - takes in an array of moves representing the board.
+ * width - takes in a number that represents the width of the board.
+ * lastMoveStatus - has the status of the last move.
+ * config -
+ *  orientation - 'b - Black, w - White' shows the boards orientation for black or white
+ *
+ * @param {*} {
+ *   position,
+ *   width,
+ *   lastMoveStatus,
+ *   config: { showPadding, showAlphaNumeric, orientation = "w" }
+ * }
+ * @returns
+ */
 function Board({
   position,
   width,

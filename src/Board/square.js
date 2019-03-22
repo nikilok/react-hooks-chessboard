@@ -11,6 +11,12 @@ const SquareBlock = styled.div`
     props.backgroundColor === 0 ? COLORS.WHITESQUARE : COLORS.BLACKSQUARE};
 `;
 
+/**
+ * This component renders the individual black and white squares.
+ *
+ * @param {*} { backgroundColor, children }
+ * @returns
+ */
 function Square({ backgroundColor, children }) {
   return (
     <SquareBlock backgroundColor={backgroundColor}>{children}</SquareBlock>

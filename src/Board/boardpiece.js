@@ -34,7 +34,20 @@ const SquareHighlight = styled.div``;
 const Piece = styled.img`
   width: ${props => props.width};
 `;
-
+/**
+ * This Component is responsible for rendering the Chess pieces,
+ * along with the square from and to highlight colors.
+ * It imports all the images for the chess pieces and inlines it.
+ *
+ * @param {*} {
+ *   square,
+ *   type,
+ *   color,
+ *   squareWidth,
+ *   lastMoveStatus = { from: "", to: "" }
+ * }
+ * @returns
+ */
 function BoardPiece({
   square,
   type,
@@ -42,6 +55,14 @@ function BoardPiece({
   squareWidth,
   lastMoveStatus = { from: "", to: "" }
 }) {
+  /**
+   * getPieceImg Fn returns back the Image given the type Notation and color
+   * of the piece.
+   *
+   * @param {*} type ( p - Pawn , n - Knight , r - Rook  , b - Bishop , k - King , q - Queen )
+   * @param {*} color ( b - Black ,  w - White )
+   * @returns (An Image reference that can be put the img src)
+   */
   function getPieceImg(type, color) {
     switch (color + type) {
       case "wp":
