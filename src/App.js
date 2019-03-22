@@ -19,6 +19,8 @@ const TableBackground = styled.div`
 
 function App() {
   const [state, dispatch] = useReducer(chessReducer, { board: new Array() });
+
+  /** Example moves only for testing a sequence of moves */
   const moves = [
     ["e2", "e4"],
     ["e7", "e5"],
@@ -35,7 +37,13 @@ function App() {
     ["f2", "f3"],
     ["e8", "c8"]
   ];
-
+  /**
+   * Replay function takes in a moves array and replays it on the board.
+   * The timeout variable takes the milliseconds to wait before playing the next move.
+   *
+   * @param {*} moves
+   * @param {number} [timeout=1000]
+   */
   function replay(moves, timeout = 1000) {
     const [from, to] = moves.shift();
 
