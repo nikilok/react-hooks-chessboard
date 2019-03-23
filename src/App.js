@@ -78,11 +78,9 @@ function App() {
     const { start, color, type } = moveDrag;
     const rowNumber = square.split("")[1];
 
-    if (!isPromotion(rowNumber, color, type)) {
+    if (!isPromotion(rowNumber, color, type, start, square)) {
       dispatch({ type: types.MOVE, from: start, to: square });
     } else {
-      // Show Promotion UI
-      console.log("Piece Color", moveDrag.color);
       setMoveDrag({ ...moveDrag, to: square });
       setShowPromotionUI(true);
     }
@@ -99,15 +97,29 @@ function App() {
     setShowPromotionUI(false);
   }
 
-  function isPromotion(rowNumber, color, type) {
+  function isPromotion(rowNumber, color, type, from, to) {
     if (rowNumber === "8" && color === "w" && type === "p") {
-      console.log("WHITE PROMOTION INIT");
-      return true;
+      if (isMoveValid(from, to)) {
+        return true;
+      }
     } else if (rowNumber === "1" && color === "b" && type === "p") {
-      console.log("BLACK PROMOTION INIT");
-      return true;
+      if (isMoveValid(from, to)) {
+        return true;
+      }
     }
     return false;
+  }
+
+  function getValidMoves(from) {
+    const validMovesVerbose = state.chess.moves({
+      square: from,
+      verbose: true
+    });
+    return Array.from(new Set(validMovesVerbose.map(({ to }) => to)));
+  }
+
+  function isMoveValid(from, to) {
+    return getValidMoves(from).includes(to);
   }
 
   return (
