@@ -37,6 +37,8 @@ const Piece = styled.img`
  *   color,
  *   lastMoveStatus = { from: "", to: "" }
  *   showMoveHighlights (true | false)
+ *   dragStart - Fn dragStart eventHandler
+ *   drop - Fn drop eventHandler
  * }
  * @returns
  */
@@ -45,7 +47,9 @@ function BoardPiece({
   type,
   color,
   lastMoveStatus = { from: "", to: "" },
-  showMoveHighlights
+  showMoveHighlights,
+  drag,
+  drop
 }) {
   /**
    * getPieceImg Fn returns back the Image given the type Notation and color
@@ -106,9 +110,20 @@ function BoardPiece({
     }
   }
 
-  const PieceContainer = type && <Piece src={imgSrc} />;
+  const PieceContainer = type && (
+    <Piece
+      src={imgSrc}
+      draggable={true}
+      onDragStart={() => drag(square, color, type)}
+    />
+  );
   return (
-    <Container onClick={clickHandle} color={squareHighlightColor}>
+    <Container
+      onClick={clickHandle}
+      color={squareHighlightColor}
+      onDrop={() => drop(square)}
+      onDragOver={event => event.preventDefault()}
+    >
       {PieceContainer}
     </Container>
   );

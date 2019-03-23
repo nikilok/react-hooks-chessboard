@@ -49,6 +49,8 @@ function Board({
   position,
   width,
   lastMoveStatus,
+  drag,
+  drop,
   config: {
     showPadding,
     showSquareLetters = true,
@@ -57,6 +59,7 @@ function Board({
   }
 }) {
   const squareWidth = `${width / 8}px`;
+
   // prettier-ignore
   const boardColorPattern = [
                             0, 1, 0, 1, 0, 1, 0, 1, 
@@ -68,7 +71,6 @@ function Board({
                             0, 1, 0, 1, 0, 1, 0, 1, 
                             1, 0, 1, 0, 1, 0, 1, 0
                           ];
-
   return (
     <BoardContainer>
       <ChessBoard width={squareWidth}>
@@ -95,6 +97,8 @@ function Board({
                   type={type}
                   lastMoveStatus={lastMoveStatus}
                   showMoveHighlights={showMoveHighlights}
+                  drag={drag}
+                  drop={drop}
                 />
               </SquareContainer>
             );

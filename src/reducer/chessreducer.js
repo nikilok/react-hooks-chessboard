@@ -28,7 +28,12 @@ function chessReducer(state, action) {
 
     case types.MOVE:
       const lastMoveStatus =
-        state.chess.move({ from: action.from, to: action.to }) || undefined;
+        state.chess.move({
+          from: action.from,
+          to: action.to,
+          promotion: action.promotion
+        }) || undefined;
+      console.log("TCL: chessReducer -> lastMoveStatus", lastMoveStatus);
       return { ...state, board: getBoard(state.chess), lastMoveStatus };
 
     default:

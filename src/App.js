@@ -37,6 +37,8 @@ function App() {
     ["f2", "f3"],
     ["e8", "c8"]
   ];
+
+  const moveDrag = { start: "", color: "", type: "" };
   /**
    * Replay function takes in a moves array and replays it on the board.
    * The timeout variable takes the milliseconds to wait before playing the next move.
@@ -58,8 +60,42 @@ function App() {
   useEffect(() => {
     dispatch({ type: types.INIT_BOARD });
 
-    replay(moves, 2000);
+    // replay(moves, 2000);
   }, []);
+
+  function dragStart(square, color, type) {
+    console.log("Drag Start at", square);
+    moveDrag.start = square;
+    moveDrag.color = color;
+    moveDrag.type = type;
+  }
+
+  function drop(square) {
+    const { start, color, type } = moveDrag;
+    const rowNumber = square.split("")[1];
+
+    if (!isPromotion(rowNumber, color, type)) {
+      dispatch({ type: types.MOVE, from: start, to: square });
+    } else {
+      console.log("dispatching queen");
+
+      // TODO: Change state to bring up a selection screen allowing the user to
+      // pick between Queen, Bishop, Knight, Rook, and then dispatch the user choice
+      // with the promotion flag, as seen below.
+      dispatch({ type: types.MOVE, from: start, to: square, promotion: "q" });
+    }
+  }
+
+  function isPromotion(rowNumber, color, type) {
+    if (rowNumber === "8" && color === "w" && type === "p") {
+      console.log("WHITE PROMOTION INIT");
+      return true;
+    } else if (rowNumber === "1" && color === "b" && type === "p") {
+      console.log("BLACK PROMOTION INIT");
+      return true;
+    }
+    return false;
+  }
 
   return (
     <Container>
@@ -74,6 +110,8 @@ function App() {
           }}
           position={state.board}
           lastMoveStatus={state.lastMoveStatus}
+          drag={dragStart}
+          drop={drop}
         />
       </TableBackground>
     </Container>
