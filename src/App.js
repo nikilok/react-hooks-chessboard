@@ -98,11 +98,10 @@ function App() {
   }
 
   function isPromotion(rowNumber, color, type, from, to) {
-    if (rowNumber === "8" && color === "w" && type === "p") {
-      if (isMoveValid(from, to)) {
-        return true;
-      }
-    } else if (rowNumber === "1" && color === "b" && type === "p") {
+    if (
+      (rowNumber === "8" && color === "w" && type === "p") ||
+      (rowNumber === "1" && color === "b" && type === "p")
+    ) {
       if (isMoveValid(from, to)) {
         return true;
       }
