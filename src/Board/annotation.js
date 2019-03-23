@@ -4,7 +4,7 @@ import { COLORS } from "../common/default-theme";
 
 const CommonAlphabetStyling = styled.div`
   position: absolute;
-  font-weight: bold;
+  /* font-weight: bold; */
   font-size: 1.2em;
   color: ${COLORS.PADDINGFOREGROUND};
   text-transform: uppercase;

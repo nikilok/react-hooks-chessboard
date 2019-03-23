@@ -15,24 +15,16 @@ import WhiteQueen from "../icons/classic/wq.webp";
 import WhiteRook from "../icons/classic/wr.webp";
 
 const Container = styled.div`
-  ${props => `
-  ${
-    props.color
-      ? `
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: ${props.color};
   width: 100%;
   height: 100%;
-  `
-      : ""
-  }
-  `};
+  background-color: ${props => props.color};
 `;
 
 const Piece = styled.img`
-  width: ${props => props.width};
+  width: 80%;
 `;
 /**
  * BoardPiece Component is responsible for rendering the Chess pieces,
@@ -43,7 +35,6 @@ const Piece = styled.img`
  *   square,
  *   type,
  *   color,
- *   squareWidth,
  *   lastMoveStatus = { from: "", to: "" }
  *   showMoveHighlights (true | false)
  * }
@@ -53,7 +44,6 @@ function BoardPiece({
   square,
   type,
   color,
-  squareWidth,
   lastMoveStatus = { from: "", to: "" },
   showMoveHighlights
 }) {
@@ -116,7 +106,7 @@ function BoardPiece({
     }
   }
 
-  const PieceContainer = type && <Piece width={squareWidth} src={imgSrc} />;
+  const PieceContainer = type && <Piece src={imgSrc} />;
   return (
     <Container onClick={clickHandle} color={squareHighlightColor}>
       {PieceContainer}

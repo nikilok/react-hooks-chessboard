@@ -94,7 +94,6 @@ function Board({
                   color={color}
                   type={type}
                   lastMoveStatus={lastMoveStatus}
-                  squareWidth={squareWidth}
                   showMoveHighlights={showMoveHighlights}
                 />
               </SquareContainer>
