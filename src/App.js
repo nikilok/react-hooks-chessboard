@@ -1,8 +1,9 @@
-import React, { useEffect, useReducer } from "react";
+import React, { useEffect, useReducer, useState } from "react";
 import chessReducer from "./reducer/chessreducer";
 import * as types from "./reducer/constants";
 import styled from "styled-components";
 import Board from "./Board";
+import Promotion from "./Board/promotion";
 
 const Container = styled.div`
   text-align: center;
@@ -19,6 +20,13 @@ const TableBackground = styled.div`
 
 function App() {
   const [state, dispatch] = useReducer(chessReducer, { board: [] });
+  const [showPromotionUI, setShowPromotionUI] = useState(false);
+  const [moveDrag, setMoveDrag] = useState({
+    start: "",
+    to: "",
+    color: "",
+    type: ""
+  });
 
   /** Example moves only for testing a sequence of moves */
   const moves = [
@@ -38,7 +46,7 @@ function App() {
     ["e8", "c8"]
   ];
 
-  const moveDrag = { start: "", color: "", type: "" };
+  // const moveDrag = { start: "", to: "", color: "", type: "" };
   /**
    * Replay function takes in a moves array and replays it on the board.
    * The timeout variable takes the milliseconds to wait before playing the next move.
@@ -59,15 +67,11 @@ function App() {
 
   useEffect(() => {
     dispatch({ type: types.INIT_BOARD });
-
     // replay(moves, 2000);
   }, []);
 
   function dragStart(square, color, type) {
-    console.log("Drag Start at", square);
-    moveDrag.start = square;
-    moveDrag.color = color;
-    moveDrag.type = type;
+    setMoveDrag({ start: square, color, type });
   }
 
   function drop(square) {
@@ -77,13 +81,22 @@ function App() {
     if (!isPromotion(rowNumber, color, type)) {
       dispatch({ type: types.MOVE, from: start, to: square });
     } else {
-      console.log("dispatching queen");
-
-      // TODO: Change state to bring up a selection screen allowing the user to
-      // pick between Queen, Bishop, Knight, Rook, and then dispatch the user choice
-      // with the promotion flag, as seen below.
-      dispatch({ type: types.MOVE, from: start, to: square, promotion: "q" });
+      // Show Promotion UI
+      console.log("Piece Color", moveDrag.color);
+      setMoveDrag({ ...moveDrag, to: square });
+      setShowPromotionUI(true);
     }
+  }
+
+  function promotionHandler(promotedPiece) {
+    const { start, to } = moveDrag;
+    dispatch({
+      type: types.MOVE,
+      from: start,
+      to,
+      promotion: promotedPiece
+    });
+    setShowPromotionUI(false);
   }
 
   function isPromotion(rowNumber, color, type) {
@@ -105,7 +118,7 @@ function App() {
           config={{
             showPadding: true,
             showSquareLetters: true,
-            orientation: "b",
+            orientation: "w",
             showMoveHighlights: true
           }}
           position={state.board}
@@ -114,6 +127,10 @@ function App() {
           drop={drop}
         />
       </TableBackground>
+
+      {showPromotionUI && (
+        <Promotion color={moveDrag.color} promotionHandler={promotionHandler} />
+      )}
     </Container>
   );
 }
