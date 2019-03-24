@@ -2,6 +2,42 @@ import Chess from "chess.js";
 import * as types from "./constants";
 
 /**
+ * The Chess Reducer Function that handles all the dispatched events
+ *
+ * @param {*} state
+ * @param {*} action
+ * @returns
+ */
+function chessReducer(state, action) {
+  switch (action.type) {
+    case types.INIT_BOARD:
+      const chess = new Chess();
+      const board = getBoard(chess);
+      return { chess, board };
+
+    case types.MOVE:
+      const lastMoveStatus =
+        state.chess.move({
+          from: action.from,
+          to: action.to,
+          promotion: action.promotion
+        }) || undefined;
+
+      return {
+        ...state,
+        board: getBoard(state.chess),
+        lastMoveStatus,
+        isGameOver: isGameOver(state.chess),
+        gameOverReason: reasonForGameOver(state.chess),
+        history: history(state.chess)
+      };
+
+    default:
+      return state;
+  }
+}
+
+/**
  * This Fn gets the chess instance and returns the entire boards status.
  * Had to write this implementation as chess.js board() wasn't accessible.
  * This custom fn also applies {type: null, color: null} for empty squares
@@ -109,35 +145,6 @@ function reasonForGameOver(chessObj) {
  */
 function history(chessObj) {
   return chessObj.history();
-}
-
-function chessReducer(state, action) {
-  switch (action.type) {
-    case types.INIT_BOARD:
-      const chess = new Chess();
-      const board = getBoard(chess);
-      return { chess, board };
-
-    case types.MOVE:
-      const lastMoveStatus =
-        state.chess.move({
-          from: action.from,
-          to: action.to,
-          promotion: action.promotion
-        }) || undefined;
-
-      return {
-        ...state,
-        board: getBoard(state.chess),
-        lastMoveStatus,
-        isGameOver: isGameOver(state.chess),
-        gameOverReason: reasonForGameOver(state.chess),
-        history: history(state.chess)
-      };
-
-    default:
-      return state;
-  }
 }
 
 export default chessReducer;
