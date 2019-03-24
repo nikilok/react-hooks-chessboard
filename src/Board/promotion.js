@@ -1,14 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import { COLORS } from "../common/default-theme";
-import BlackBishop from "../icons/classic/bb.webp";
-import BlackKnight from "../icons/classic/bn.webp";
-import BlackQueen from "../icons/classic/bq.png";
-import BlackRook from "../icons/classic/br.png";
-import WhiteBishop from "../icons/classic/wb.png";
-import WhiteKnight from "../icons/classic/wn.webp";
-import WhiteQueen from "../icons/classic/wq.webp";
-import WhiteRook from "../icons/classic/wr.webp";
+import { COLORS } from "../common/modern-theme";
+import * as ImageSet from "../icons/modern";
 import Modal from "../Modal";
 
 const Piece = styled.img`
@@ -36,21 +29,21 @@ function Promotion({ color, promotionHandler }) {
   function getPieceImg(type, color) {
     switch (color + type) {
       case "bb":
-        return BlackBishop;
+        return ImageSet.BlackBishop;
       case "wb":
-        return WhiteBishop;
+        return ImageSet.WhiteBishop;
       case "bn":
-        return BlackKnight;
+        return ImageSet.BlackKnight;
       case "wn":
-        return WhiteKnight;
+        return ImageSet.WhiteKnight;
       case "bq":
-        return BlackQueen;
+        return ImageSet.BlackQueen;
       case "wq":
-        return WhiteQueen;
+        return ImageSet.WhiteQueen;
       case "wr":
-        return WhiteRook;
+        return ImageSet.WhiteRook;
       case "br":
-        return BlackRook;
+        return ImageSet.BlackRook;
       default:
         return;
     }

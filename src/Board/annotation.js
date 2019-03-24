@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { COLORS } from "../common/default-theme";
+import { COLORS } from "../common/modern-theme";
 
 const CommonAlphabetStyling = styled.div`
   position: absolute;

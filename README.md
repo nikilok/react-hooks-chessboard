@@ -6,11 +6,15 @@ React chess is a chess board UI build using React Hooks. It is built on top of c
 
 ## Pawn Promotion UI
 
-<img src="https://i.imgur.com/aZhbxMg.png" height="500" width="500">
+<img src="https://i.imgur.com/aZhbxMg.png" height="500" width="500" />
 
 ## Support for board orientation
 
-<img src="https://i.imgur.com/4pkhJBb.png" height="500" width="500">
+<img src="https://i.imgur.com/4pkhJBb.png" height="500" width="500" />
+
+## Modern Theme
+
+<img src="https://i.imgur.com/o8H7scG.png" height="500" width="500" />
 
 ## Available Scripts
 

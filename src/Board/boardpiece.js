@@ -1,18 +1,7 @@
 import React, { useContext } from "react";
-import { COLORS } from "../common/default-theme";
+import { COLORS } from "../common/modern-theme";
 import styled from "styled-components";
-import BlackBishop from "../icons/classic/bb.webp";
-import BlackKing from "../icons/classic/bk.png";
-import BlackKnight from "../icons/classic/bn.webp";
-import BlackPawn from "../icons/classic/bp.webp";
-import BlackQueen from "../icons/classic/bq.png";
-import BlackRook from "../icons/classic/br.png";
-import WhiteBishop from "../icons/classic/wb.png";
-import WhiteKing from "../icons/classic/wk.png";
-import WhiteKnight from "../icons/classic/wn.webp";
-import WhitePawn from "../icons/classic/wp.png";
-import WhiteQueen from "../icons/classic/wq.webp";
-import WhiteRook from "../icons/classic/wr.webp";
+import * as ImageSet from "../icons/modern";
 import ChessContext from "../context";
 
 const Container = styled.div`
@@ -61,29 +50,29 @@ function BoardPiece({
   function getPieceImg(type, color) {
     switch (color + type) {
       case "wp":
-        return WhitePawn;
+        return ImageSet.WhitePawn;
       case "bp":
-        return BlackPawn;
+        return ImageSet.BlackPawn;
       case "bb":
-        return BlackBishop;
+        return ImageSet.BlackBishop;
       case "wb":
-        return WhiteBishop;
+        return ImageSet.WhiteBishop;
       case "bk":
-        return BlackKing;
+        return ImageSet.BlackKing;
       case "wk":
-        return WhiteKing;
+        return ImageSet.WhiteKing;
       case "bn":
-        return BlackKnight;
+        return ImageSet.BlackKnight;
       case "wn":
-        return WhiteKnight;
+        return ImageSet.WhiteKnight;
       case "bq":
-        return BlackQueen;
+        return ImageSet.BlackQueen;
       case "wq":
-        return WhiteQueen;
+        return ImageSet.WhiteQueen;
       case "wr":
-        return WhiteRook;
+        return ImageSet.WhiteRook;
       case "br":
-        return BlackRook;
+        return ImageSet.BlackRook;
       default:
         return;
     }

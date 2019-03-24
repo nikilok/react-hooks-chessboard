@@ -1,4 +1,5 @@
 import React, { useEffect, useReducer, useState } from "react";
+import { COLORS } from "./common/modern-theme";
 import ChessContext from "./context";
 import chessReducer from "./reducer/chessreducer";
 import * as types from "./reducer/constants";
@@ -12,7 +13,7 @@ const Container = styled.div`
 `;
 
 const TableBackground = styled.div`
-  background-color: #282c34;
+  background-color: ${COLORS.TABLEBACKGROUND};
   min-height: 100vh;
   display: flex;
   flex-direction: column;

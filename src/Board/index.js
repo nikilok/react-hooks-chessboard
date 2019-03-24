@@ -3,7 +3,7 @@ import styled from "styled-components";
 import Square from "./square";
 import BoardPiece from "./boardpiece";
 import Annotation from "./annotation";
-import { COLORS } from "../common/default-theme";
+import { COLORS } from "../common/modern-theme";
 
 const BoardContainer = styled.div`
   position: relative;
