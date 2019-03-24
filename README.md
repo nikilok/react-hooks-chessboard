@@ -2,11 +2,15 @@
 
 React chess is a chess board UI build using React Hooks. It is built on top of chess.js which handles move validations, move states etc.
 
-<img src="https://raw.githubusercontent.com/nikilok/react-hooks-chessboard/master/public/Chess.png?token=AF7pj4vd13_vZfFIGVpAb1Q0xbIr0JWRks5cl4E7wA%3D%3D" height="500" width="500" />
+<img src="https://raw.githubusercontent.com/nikilok/react-hooks-chessboard/master/public/Chess.png?token=AF7pj1Dw4LhqDkFDYTh0p3MYDVAycP6Hks5cl4QRwA%3D%3D" height="500" width="500" />
 
 ## Pawn Promotion UI
 
 <img src="https://raw.githubusercontent.com/nikilok/react-hooks-chessboard/master/public/Promotion.png?token=AF7pj8TPVAm_p_X5TEdO3Ed32L46vyYVks5cl4OdwA%3D%3D" height="500" width="500">
+
+## Support for board orientation
+
+<img src="https://raw.githubusercontent.com/nikilok/react-hooks-chessboard/master/public/BlackOrientation.png?token=AF7pj8TPVAm_p_X5TEdO3Ed32L46vyYVks5cl4OdwA%3D%3D" height="500" width="500">
 
 ## Available Scripts
 
