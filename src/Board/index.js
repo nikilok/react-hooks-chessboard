@@ -49,8 +49,6 @@ function Board({
   position,
   width,
   lastMoveStatus,
-  drag,
-  drop,
   config: {
     showPadding,
     showSquareLetters = true,
@@ -97,8 +95,6 @@ function Board({
                   type={type}
                   lastMoveStatus={lastMoveStatus}
                   showMoveHighlights={showMoveHighlights}
-                  drag={drag}
-                  drop={drop}
                 />
               </SquareContainer>
             );

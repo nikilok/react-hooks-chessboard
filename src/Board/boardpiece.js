@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { COLORS } from "../common/default-theme";
 import styled from "styled-components";
 import BlackBishop from "../icons/classic/bb.webp";
@@ -13,6 +13,7 @@ import WhiteKnight from "../icons/classic/wn.webp";
 import WhitePawn from "../icons/classic/wp.png";
 import WhiteQueen from "../icons/classic/wq.webp";
 import WhiteRook from "../icons/classic/wr.webp";
+import ChessContext from "../context";
 
 const Container = styled.div`
   display: flex;
@@ -26,6 +27,7 @@ const Container = styled.div`
 const Piece = styled.img`
   width: 80%;
 `;
+
 /**
  * BoardPiece Component is responsible for rendering the Chess pieces,
  * along with the square from and to highlight colors.
@@ -37,8 +39,6 @@ const Piece = styled.img`
  *   color,
  *   lastMoveStatus = { from: "", to: "" }
  *   showMoveHighlights (true | false)
- *   dragStart - Fn dragStart eventHandler
- *   drop - Fn drop eventHandler
  * }
  * @returns
  */
@@ -47,10 +47,9 @@ function BoardPiece({
   type,
   color,
   lastMoveStatus = { from: "", to: "" },
-  showMoveHighlights,
-  drag,
-  drop
+  showMoveHighlights
 }) {
+  const { dragStart: drag, drop } = useContext(ChessContext);
   /**
    * getPieceImg Fn returns back the Image given the type Notation and color
    * of the piece.

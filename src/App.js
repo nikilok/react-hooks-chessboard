@@ -1,4 +1,5 @@
 import React, { useEffect, useReducer, useState } from "react";
+import ChessContext from "./context";
 import chessReducer from "./reducer/chessreducer";
 import * as types from "./reducer/constants";
 import styled from "styled-components";
@@ -49,7 +50,7 @@ function App() {
 
   useEffect(() => {
     dispatch({ type: types.INIT_BOARD });
-    // replay(moves, 2000);
+    replay(moves, 2000);
   }, []);
 
   /**
@@ -168,31 +169,34 @@ function App() {
   }
 
   return (
-    <Container>
-      <TableBackground>
-        <Board
-          width="800"
-          config={{
-            showPadding: true,
-            showSquareLetters: true,
-            orientation: "w",
-            showMoveHighlights: true
-          }}
-          position={state.board}
-          lastMoveStatus={state.lastMoveStatus}
-          drag={dragStart}
-          drop={drop}
-        />
-      </TableBackground>
+    <ChessContext.Provider value={{ dragStart, drop }}>
+      <Container>
+        <TableBackground>
+          <Board
+            width="800"
+            config={{
+              showPadding: true,
+              showSquareLetters: true,
+              orientation: "w",
+              showMoveHighlights: true
+            }}
+            position={state.board}
+            lastMoveStatus={state.lastMoveStatus}
+          />
+        </TableBackground>
 
-      {showPromotionUI && (
-        <Promotion color={moveDrag.color} promotionHandler={promotionHandler} />
-      )}
+        {showPromotionUI && (
+          <Promotion
+            color={moveDrag.color}
+            promotionHandler={promotionHandler}
+          />
+        )}
 
-      {state.isGameOver && (
-        <Modal title="Game Over">{state.gameOverReason}</Modal>
-      )}
-    </Container>
+        {state.isGameOver && (
+          <Modal title="Game Over">{state.gameOverReason}</Modal>
+        )}
+      </Container>
+    </ChessContext.Provider>
   );
 }
 
