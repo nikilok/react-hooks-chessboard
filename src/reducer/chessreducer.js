@@ -27,9 +27,9 @@ function chessReducer(state, action) {
         ...state,
         board: getBoard(state.chess),
         lastMoveStatus,
-        isGameOver: isGameOver(state.chess),
+        isGameOver: state.chess.game_over(),
         gameOverReason: reasonForGameOver(state.chess),
-        history: history(state.chess)
+        history: state.chess.history()
       };
 
     default:
@@ -56,95 +56,23 @@ function getBoard(chessObj) {
 }
 
 /**
- * Fn that returns true or false indicating if the Game is over
- *
- * @param {*} chessObj
- * @returns
- */
-function isGameOver(chessObj) {
-  return chessObj.game_over();
-}
-
-/**
- * Fn that returns true or false indicating if it was a Checkmate
- *
- * @param {*} chessObj
- * @returns
- */
-function isCheckMate(chessObj) {
-  return chessObj.in_checkmate();
-}
-
-/**
- * Fn that returns true or false indicating if it was a Draw,
- * Returns true or false if the game is drawn (50-move rule or insufficient material).
- *
- * @param {*} chessObj
- * @returns
- */
-function isDraw(chessObj) {
-  return chessObj.in_draw();
-}
-
-/**
- * Returns true or false if the side to move has been stalemated.
- *
- * @param {*} chessObj
- * @returns
- */
-function isStaleMate(chessObj) {
-  return chessObj.in_stalemate();
-}
-
-/**
- * Returns true or false if the current board position has occurred three or more times.
- *
- * @param {*} chessObj
- * @returns
- */
-function isThreeFoldRepetition(chessObj) {
-  return chessObj.in_threefold_repetition();
-}
-
-/**
- * Returns true if the game is drawn due to insufficient material
- * (K vs. K, K vs. KB, or K vs. KN); otherwise false.
- *
- * @param {*} chessObj
- * @returns
- */
-function isInsufficentMaterial(chessObj) {
-  return chessObj.insufficient_material();
-}
-
-/**
  * Fn that figures out the reason the game was concluded.
  *
  * @param {*} chessObj
  * @returns
  */
 function reasonForGameOver(chessObj) {
-  if (isCheckMate(chessObj)) {
+  if (chessObj.in_checkmate()) {
     return "Check Mate";
-  } else if (isThreeFoldRepetition(chessObj)) {
+  } else if (chessObj.in_threefold_repetition()) {
     return "Three Fold Repetition";
-  } else if (isDraw(chessObj)) {
+  } else if (chessObj.in_draw()) {
     return "Draw";
-  } else if (isStaleMate(chessObj)) {
+  } else if (chessObj.in_stalemate()) {
     return "Stale Mate";
-  } else if (isInsufficentMaterial(chessObj)) {
+  } else if (chessObj.insufficient_material()) {
     return "Insufficent Material Draw";
   }
-}
-
-/**
- * Returns the game history in an array
- *
- * @param {*} chessObj
- * @returns
- */
-function history(chessObj) {
-  return chessObj.history();
 }
 
 export default chessReducer;
