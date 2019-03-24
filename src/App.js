@@ -178,7 +178,6 @@ function App() {
           <Board
             width="800"
             config={{
-              showPadding: true,
               showSquareLetters: true,
               orientation: "w",
               showMoveHighlights: true

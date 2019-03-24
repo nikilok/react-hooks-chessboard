@@ -35,7 +35,7 @@ const SquareContainer = styled.div`
  * width - takes in a number that represents the width of the board.
  * lastMoveStatus - has the status of the last move.
  * config -
- *  orientation - 'b - Black, w - White' shows the boards orientation for black or white
+ *  orientation - 'b - Black, w - White, auto - Auto' changes the orientation of the board
  *
  * @param {*} {
  *   position,
@@ -51,7 +51,6 @@ function Board({
   lastMoveStatus,
   turn,
   config: {
-    showPadding,
     showSquareLetters = true,
     orientation = "w",
     showMoveHighlights = true
