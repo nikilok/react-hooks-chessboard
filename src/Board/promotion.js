@@ -9,6 +9,7 @@ import WhiteBishop from "../icons/classic/wb.png";
 import WhiteKnight from "../icons/classic/wn.webp";
 import WhiteQueen from "../icons/classic/wq.webp";
 import WhiteRook from "../icons/classic/wr.webp";
+import Modal from "../Modal";
 
 const Piece = styled.img`
   width: 120px;
@@ -19,29 +20,6 @@ const Piece = styled.img`
     border-radius: 10px;
     cursor: pointer;
   }
-`;
-
-const Caption = styled.div`
-  font-size: 1.5em;
-  margin-bottom: 15px;
-`;
-
-const PromotionMask = styled.div`
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background-color: rgba(0, 0, 0, 0.7);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
-const PromotionModal = styled.div`
-  background-color: white;
-  padding: 50px;
-  border-radius: 10px;
 `;
 
 /**
@@ -89,12 +67,7 @@ function Promotion({ color, promotionHandler }) {
     );
   });
   return (
-    <PromotionMask>
-      <PromotionModal>
-        <Caption>Please select a piece to promote to</Caption>
-        {PromotionList}
-      </PromotionModal>
-    </PromotionMask>
+    <Modal title="Please select a piece to promote to">{PromotionList}</Modal>
   );
 }
 

@@ -4,6 +4,7 @@ import * as types from "./reducer/constants";
 import styled from "styled-components";
 import Board from "./Board";
 import Promotion from "./Board/promotion";
+import Modal from "./Modal";
 
 const Container = styled.div`
   text-align: center;
@@ -46,7 +47,11 @@ function App() {
     ["e8", "c8"]
   ];
 
-  // const moveDrag = { start: "", to: "", color: "", type: "" };
+  useEffect(() => {
+    dispatch({ type: types.INIT_BOARD });
+    // replay(moves, 2000);
+  }, []);
+
   /**
    * Replay function takes in a moves array and replays it on the board.
    * The timeout variable takes the milliseconds to wait before playing the next move.
@@ -65,15 +70,25 @@ function App() {
     }, timeout);
   }
 
-  useEffect(() => {
-    dispatch({ type: types.INIT_BOARD });
-    // replay(moves, 2000);
-  }, []);
-
+  /**
+   * The Fn is called when the user starts to drag a chess piece.
+   * It populates the starting square, the color of the person making the move
+   * and the type of piece moved into the MoveDrag state object.
+   *
+   * @param {*} square
+   * @param {*} color
+   * @param {*} type
+   */
   function dragStart(square, color, type) {
     setMoveDrag({ start: square, color, type });
   }
 
+  /**
+   * The Drop Fn is triggered when the user finishes dragging a chess piece
+   * on to the board.
+   *
+   * @param {*} square
+   */
   function drop(square) {
     const { start, color, type } = moveDrag;
     const rowNumber = square.split("")[1];
@@ -86,6 +101,12 @@ function App() {
     }
   }
 
+  /**
+   * Event handler for when a successful Pawn promotion is made.
+   * The Fn closes the Promotion UI after the user has made a choice.
+   *
+   * @param {*} promotedPiece
+   */
   function promotionHandler(promotedPiece) {
     const { start, to } = moveDrag;
     dispatch({
@@ -97,6 +118,17 @@ function App() {
     setShowPromotionUI(false);
   }
 
+  /**
+   * Fn that figures out if a White or Black pawn has trigerred a promotion.
+   * Returns True or False indicating if Promotion was triggered or not.
+   *
+   * @param {*} rowNumber
+   * @param {*} color
+   * @param {*} type
+   * @param {*} from
+   * @param {*} to
+   * @returns
+   */
   function isPromotion(rowNumber, color, type, from, to) {
     if (
       (rowNumber === "8" && color === "w" && type === "p") ||
@@ -109,6 +141,12 @@ function App() {
     return false;
   }
 
+  /**
+   * Fn that returns an Array of all valid moves for a given square notation
+   *
+   * @param {*} from
+   * @returns
+   */
   function getValidMoves(from) {
     const validMovesVerbose = state.chess.moves({
       square: from,
@@ -117,6 +155,14 @@ function App() {
     return Array.from(new Set(validMovesVerbose.map(({ to }) => to)));
   }
 
+  /**
+   * Fn that figures out if the given From (Square Notation) -> To (Square Notation)
+   * move is valid or not. Returns a True (Valid) or False (InValid)
+   *
+   * @param {*} from
+   * @param {*} to
+   * @returns
+   */
   function isMoveValid(from, to) {
     return getValidMoves(from).includes(to);
   }
@@ -141,6 +187,10 @@ function App() {
 
       {showPromotionUI && (
         <Promotion color={moveDrag.color} promotionHandler={promotionHandler} />
+      )}
+
+      {state.isGameOver && (
+        <Modal title="Game Over">{state.gameOverReason}</Modal>
       )}
     </Container>
   );
