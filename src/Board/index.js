@@ -49,6 +49,7 @@ function Board({
   position,
   width,
   lastMoveStatus,
+  turn,
   config: {
     showPadding,
     showSquareLetters = true,
@@ -57,7 +58,6 @@ function Board({
   }
 }) {
   const squareWidth = `${width / 8}px`;
-
   // prettier-ignore
   const boardColorPattern = [
                             0, 1, 0, 1, 0, 1, 0, 1, 
@@ -69,6 +69,29 @@ function Board({
                             0, 1, 0, 1, 0, 1, 0, 1, 
                             1, 0, 1, 0, 1, 0, 1, 0
                           ];
+
+  /**
+   * getPosition Fn returns the position array based on the orientation.
+   * When in auto orientation it figures out whose turn it is currently
+   * and returns the position array based on it.
+   *
+   * @param {*} orientation
+   * @returns
+   */
+  function getPosition(orientation) {
+    const reversedPosition = [...position].reverse();
+    switch (orientation) {
+      case "w":
+        return position;
+      case "b":
+        return reversedPosition;
+      case "auto":
+        return turn() === "w" ? position : reversedPosition;
+      default:
+        return position;
+    }
+  }
+
   return (
     <BoardContainer>
       <ChessBoard width={squareWidth}>
@@ -78,28 +101,26 @@ function Board({
       </ChessBoard>
 
       <BoardPiecesGrid width={squareWidth}>
-        {(orientation === "w" ? position : position.reverse()).map(
-          ({ type, color, square }, i) => {
-            return (
-              <SquareContainer key={i}>
-                {i % 8 === 0 && showSquareLetters && (
-                  <Annotation square={square} align="left" />
-                )}
-                {i >= 56 && showSquareLetters && (
-                  <Annotation square={square} align="bottom" />
-                )}
+        {getPosition(orientation).map(({ type, color, square }, i) => {
+          return (
+            <SquareContainer key={i}>
+              {i % 8 === 0 && showSquareLetters && (
+                <Annotation square={square} align="left" />
+              )}
+              {i >= 56 && showSquareLetters && (
+                <Annotation square={square} align="bottom" />
+              )}
 
-                <BoardPiece
-                  square={square}
-                  color={color}
-                  type={type}
-                  lastMoveStatus={lastMoveStatus}
-                  showMoveHighlights={showMoveHighlights}
-                />
-              </SquareContainer>
-            );
-          }
-        )}
+              <BoardPiece
+                square={square}
+                color={color}
+                type={type}
+                lastMoveStatus={lastMoveStatus}
+                showMoveHighlights={showMoveHighlights}
+              />
+            </SquareContainer>
+          );
+        })}
       </BoardPiecesGrid>
     </BoardContainer>
   );

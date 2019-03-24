@@ -21,7 +21,10 @@ const TableBackground = styled.div`
 `;
 
 function App() {
-  const [state, dispatch] = useReducer(chessReducer, { board: [] });
+  const [state, dispatch] = useReducer(chessReducer, {
+    chess: { turn: () => {} },
+    board: []
+  });
   const [showPromotionUI, setShowPromotionUI] = useState(false);
   const [moveDrag, setMoveDrag] = useState({
     start: "",
@@ -50,7 +53,7 @@ function App() {
 
   useEffect(() => {
     dispatch({ type: types.INIT_BOARD });
-    replay(moves, 2000);
+    // replay(moves, 2000);
   }, []);
 
   /**
@@ -182,6 +185,7 @@ function App() {
             }}
             position={state.board}
             lastMoveStatus={state.lastMoveStatus}
+            turn={state.chess.turn}
           />
         </TableBackground>
 
