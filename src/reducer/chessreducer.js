@@ -29,12 +29,68 @@ function chessReducer(state, action) {
         lastMoveStatus,
         isGameOver: state.chess.game_over(),
         gameOverReason: reasonForGameOver(state.chess),
-        history: state.chess.history()
+        history: state.chess.history(),
+        animatePiece: undefined
       };
 
+    case types.ANIMATEMOVE:
+      const { from, to, boardWidth, orientation, animationDelay } = action;
+      const { type, color } = state.chess.get(from);
+      const squareWidth = boardWidth / 8;
+      return {
+        ...state,
+        animatePiece: {
+          from: getCoords(from, orientation, squareWidth, state.chess.turn),
+          to: getCoords(to, orientation, squareWidth, state.chess.turn),
+          squareColor: state.chess.square_color(from),
+          type,
+          color,
+          animationDelay
+        }
+      };
+
+    case types.CLEARHIGHLIGHT:
+      return {
+        ...state,
+        lastMoveStatus: undefined
+      };
     default:
       return state;
   }
+}
+
+/**
+ * getCoords Fn returns an object with the 'x' and 'y' pixel coordinates
+ * for a given notation (square), a given board orientation ('w','b','auto')
+ * and a known square width (width).
+ * When orientation is auto, the turn parameter recieves a turn Fn, that
+ * tells you whose turn it currently is.
+ *
+ * @param {*} square
+ * @param {*} orientation
+ * @param {*} width
+ * @param {*} turn
+ * @returns
+ */
+function getCoords(square, orientation, width, turn) {
+  const colMappingW = { a: 0, b: 1, c: 2, d: 3, e: 4, f: 5, g: 6, h: 7 },
+    colMappingB = { a: 7, b: 6, c: 5, d: 4, e: 3, f: 2, g: 1, h: 0 },
+    notationSplit = square.split(""),
+    rowValue = notationSplit[1],
+    colValue = notationSplit[0];
+  let x, y;
+  if (orientation === "auto") {
+    orientation = turn(square);
+  }
+
+  if (orientation === "w") {
+    x = colMappingW[colValue] * width;
+    y = Math.abs(rowValue - 8) * width;
+  } else if (orientation === "b") {
+    x = colMappingB[colValue] * width;
+    y = (rowValue - 1) * width;
+  }
+  return { x, y };
 }
 
 /**

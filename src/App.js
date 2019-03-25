@@ -33,6 +33,8 @@ function App() {
     color: "",
     type: ""
   });
+  const boardWidth = 800,
+    orientation = "w";
 
   /** Example moves only for testing a sequence of moves */
   const moves = [
@@ -54,7 +56,7 @@ function App() {
 
   useEffect(() => {
     dispatch({ type: types.INIT_BOARD });
-    // replay(moves, 2000);
+    replay(moves, 1500);
   }, []);
 
   /**
@@ -66,12 +68,22 @@ function App() {
    */
   function replay(moves, timeout = 1000) {
     const [from, to] = moves.shift();
-
+    const animationDelay = timeout / 4;
     setTimeout(() => {
-      dispatch({ type: types.MOVE, from, to });
-      if (moves.length > 0) {
-        replay(moves, timeout);
-      }
+      dispatch({
+        type: types.ANIMATEMOVE,
+        from,
+        to,
+        boardWidth,
+        orientation,
+        animationDelay
+      });
+      setTimeout(() => {
+        dispatch({ type: types.MOVE, from, to });
+        if (moves.length > 0) {
+          replay(moves, timeout);
+        }
+      }, animationDelay); // Time period for completing the transition animation of the chess piece
     }, timeout);
   }
 
@@ -104,6 +116,10 @@ function App() {
       setMoveDrag({ ...moveDrag, to: square });
       setShowPromotionUI(true);
     }
+  }
+
+  function clearHighlight() {
+    dispatch({ type: types.CLEARHIGHLIGHT });
   }
 
   /**
@@ -173,18 +189,19 @@ function App() {
   }
 
   return (
-    <ChessContext.Provider value={{ dragStart, drop }}>
+    <ChessContext.Provider value={{ dragStart, drop, clearHighlight }}>
       <Container>
         <TableBackground>
           <Board
-            width="800"
+            width={boardWidth}
             config={{
               showSquareLetters: true,
-              orientation: "w",
+              orientation: orientation,
               showMoveHighlights: true
             }}
             position={state.board}
             lastMoveStatus={state.lastMoveStatus}
+            animatePiece={state.animatePiece}
             turn={state.chess.turn}
           />
         </TableBackground>

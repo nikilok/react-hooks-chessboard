@@ -3,6 +3,7 @@ import styled from "styled-components";
 import Square from "./square";
 import BoardPiece from "./boardpiece";
 import Annotation from "./annotation";
+import AnimatePiece from "./animatepiece";
 import { COLORS } from "../common/modern-theme";
 
 const BoardContainer = styled.div`
@@ -51,6 +52,7 @@ function Board({
   width,
   lastMoveStatus,
   turn,
+  animatePiece,
   config: {
     showSquareLetters = true,
     orientation = "auto",
@@ -91,7 +93,6 @@ function Board({
         return position;
     }
   }
-
   return (
     <BoardContainer>
       <ChessBoard width={squareWidth}>
@@ -122,6 +123,10 @@ function Board({
           );
         })}
       </BoardPiecesGrid>
+
+      {animatePiece && (
+        <AnimatePiece animate={animatePiece} width={squareWidth} />
+      )}
     </BoardContainer>
   );
 }
