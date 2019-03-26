@@ -56,7 +56,7 @@ function App() {
 
   useEffect(() => {
     dispatch({ type: types.INIT_BOARD });
-    replay(moves, 1500);
+    // replay(moves, 1500);
   }, []);
 
   /**
@@ -96,8 +96,8 @@ function App() {
    * @param {*} color
    * @param {*} type
    */
-  function dragStart(square, color, type) {
-    setMoveDrag({ start: square, color, type });
+  function dragStart(square, color, type, restrict) {
+    !restrict.includes(color) && setMoveDrag({ start: square, color, type });
   }
 
   /**
@@ -203,6 +203,7 @@ function App() {
             lastMoveStatus={state.lastMoveStatus}
             animatePiece={state.animatePiece}
             turn={state.chess.turn}
+            restrict={[]}
           />
         </TableBackground>
 

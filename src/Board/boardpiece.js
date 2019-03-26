@@ -13,6 +13,15 @@ const Container = styled.div`
   background-color: ${props => props.color};
 `;
 
+const MousePointer = styled.div`
+  cursor: ${props =>
+    props.restrict.includes(props.color) ? "no-drop" : "grab"};
+
+  &:active {
+    cursor: ${props => !props.restrict.includes(props.color) && "grabbing"};
+  }
+`;
+
 /**
  * BoardPiece Component is responsible for rendering the Chess pieces,
  * along with the square from and to highlight colors.
@@ -22,6 +31,7 @@ const Container = styled.div`
  *   square,
  *   type,
  *   color,
+ *   turn,
  *   lastMoveStatus = { from: "", to: "" }
  *   showMoveHighlights (true | false)
  * }
@@ -32,7 +42,9 @@ function BoardPiece({
   type,
   color,
   lastMoveStatus = { from: "", to: "" },
-  showMoveHighlights
+  showMoveHighlights,
+  restrict,
+  turn
 }) {
   const { dragStart: drag, drop, clearHighlight } = useContext(ChessContext);
 
@@ -54,9 +66,14 @@ function BoardPiece({
   }
 
   const PieceContainer = type && (
-    <div draggable={true} onDragStart={() => drag(square, color, type)}>
+    <MousePointer
+      color={color}
+      restrict={[...restrict, turn() === "w" ? "b" : "w"]}
+      draggable={true}
+      onDragStart={() => drag(square, color, type, restrict)}
+    >
       <Icon type={type} color={color} width="80%" />
-    </div>
+    </MousePointer>
   );
   return (
     <Container

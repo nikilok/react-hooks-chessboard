@@ -36,6 +36,8 @@ const SquareContainer = styled.div`
  * width - takes in a number that represents the width of the board.
  * lastMoveStatus - has the status of the last move.
  * turn - Fn that returns whose turn it is (w - for White, b - for Black)
+ * restrict - Recieves an Array of colors you want to restrict player from moving .
+ *  ['w','b'] restricts both white and black players from moving.
  * config -
  *  orientation - 'b - Black, w - White, auto - Auto' changes the orientation of the board
  *
@@ -43,6 +45,7 @@ const SquareContainer = styled.div`
  *   position,
  *   width,
  *   lastMoveStatus,
+ *   restrict,
  *   config: { showPadding, showAlphaNumeric, orientation = "w" }
  * }
  * @returns
@@ -53,6 +56,7 @@ function Board({
   lastMoveStatus,
   turn,
   animatePiece,
+  restrict,
   config: {
     showSquareLetters = true,
     orientation = "auto",
@@ -116,8 +120,10 @@ function Board({
                 square={square}
                 color={color}
                 type={type}
+                turn={turn}
                 lastMoveStatus={lastMoveStatus}
                 showMoveHighlights={showMoveHighlights}
+                restrict={restrict}
               />
             </SquareContainer>
           );
