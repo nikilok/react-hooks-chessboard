@@ -6,7 +6,7 @@ export const COLORS = {
   BOARDBORDER: "#262c3a",
   WHITEPIECE: "#f3c3d3",
   BLACKPIECE: "#d3c3e3",
-  MOVEFROM: "rgba(110, 34, 208, 0.2)",
-  MOVETO: "rgba(40, 43, 134, 0.5)",
+  MOVEFROM: "#8e43e7a0",
+  MOVETO: "#8e43e7",
   TABLEBACKGROUND: "#59667f"
 };
