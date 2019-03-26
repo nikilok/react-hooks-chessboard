@@ -68,7 +68,7 @@ function App() {
    */
   function replay(moves, timeout = 1000) {
     const [from, to] = moves.shift();
-    const animationDelay = timeout / 4;
+    const animationDelay = timeout / 2.5;
     setTimeout(() => {
       dispatch({
         type: types.ANIMATEMOVE,

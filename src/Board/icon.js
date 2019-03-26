@@ -4,6 +4,7 @@ import * as ImageSet from "../icons/modern";
 
 const Piece = styled.img`
   width: ${props => props.width};
+  height: ${props => props.width};
 `;
 
 /**
