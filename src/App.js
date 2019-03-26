@@ -56,7 +56,7 @@ function App() {
 
   useEffect(() => {
     dispatch({ type: types.INIT_BOARD });
-    // replay(moves, 1500);
+    replay(moves, 1500);
   }, []);
 
   /**
@@ -67,24 +67,31 @@ function App() {
    * @param {number} [timeout=1000]
    */
   function replay(moves, timeout = 1000) {
-    const [from, to] = moves.shift();
-    const animationDelay = timeout / 2.5;
-    setTimeout(() => {
-      dispatch({
-        type: types.ANIMATEMOVE,
-        from,
-        to,
-        boardWidth,
-        orientation,
-        animationDelay
-      });
+    dispatch({ type: types.REPLAY, inProgress: true });
+    recursiveReplay(moves, timeout);
+
+    function recursiveReplay(moves, timeout) {
+      const [from, to] = moves.shift();
+      const animationDelay = timeout / 2.5;
       setTimeout(() => {
-        dispatch({ type: types.MOVE, from, to });
-        if (moves.length > 0) {
-          replay(moves, timeout);
-        }
-      }, animationDelay); // Time period for completing the transition animation of the chess piece
-    }, timeout);
+        dispatch({
+          type: types.ANIMATEMOVE,
+          from,
+          to,
+          boardWidth,
+          orientation,
+          animationDelay
+        });
+        setTimeout(() => {
+          dispatch({ type: types.MOVE, from, to });
+          if (moves.length > 0) {
+            replay(moves, timeout);
+          } else {
+            dispatch({ type: types.REPLAY, inProgress: false });
+          }
+        }, animationDelay); // Time period for completing the transition animation of the chess piece
+      }, timeout);
+    }
   }
 
   /**
@@ -189,7 +196,14 @@ function App() {
   }
 
   return (
-    <ChessContext.Provider value={{ dragStart, drop, clearHighlight }}>
+    <ChessContext.Provider
+      value={{
+        dragStart,
+        drop,
+        clearHighlight,
+        replayInProgress: state.replayInProgress
+      }}
+    >
       <Container>
         <TableBackground>
           <Board

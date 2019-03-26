@@ -46,7 +46,18 @@ function BoardPiece({
   restrict,
   turn
 }) {
-  const { dragStart: drag, drop, clearHighlight } = useContext(ChessContext);
+  const {
+    dragStart: drag,
+    drop,
+    clearHighlight,
+    replayInProgress
+  } = useContext(ChessContext);
+
+  const restrictArray = [
+    ...restrict,
+    turn() === "w" ? "b" : "w",
+    ...(replayInProgress ? ["w", "b"] : [])
+  ];
 
   function clickHandle() {
     clearHighlight();
@@ -68,9 +79,9 @@ function BoardPiece({
   const PieceContainer = type && (
     <MousePointer
       color={color}
-      restrict={[...restrict, turn() === "w" ? "b" : "w"]}
+      restrict={restrictArray}
       draggable={true}
-      onDragStart={() => drag(square, color, type, restrict)}
+      onDragStart={() => drag(square, color, type, restrictArray)}
     >
       <Icon type={type} color={color} width="80%" />
     </MousePointer>

@@ -54,6 +54,9 @@ function chessReducer(state, action) {
         ...state,
         lastMoveStatus: undefined
       };
+
+    case types.REPLAY:
+      return { ...state, replayInProgress: action.inProgress };
     default:
       return state;
   }
