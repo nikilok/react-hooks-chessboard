@@ -113,7 +113,8 @@ function App() {
    *
    * @param {*} square
    */
-  function drop(square) {
+  function drop(event, square) {
+    event.preventDefault();
     const { start, color, type } = moveDrag;
     const rowNumber = square.split("")[1];
 

@@ -14,6 +14,7 @@ const Container = styled.div`
 `;
 
 const MousePointer = styled.div`
+  width: 100%;
   cursor: ${props =>
     props.restrict.includes(props.color) ? "no-drop" : "grab"};
 
@@ -90,7 +91,7 @@ function BoardPiece({
     <Container
       onClick={clickHandle}
       color={squareHighlightColor}
-      onDrop={() => drop(square)}
+      onDrop={event => drop(event, square)}
       onDragOver={event => event.preventDefault()}
     >
       {PieceContainer}
