@@ -57,6 +57,12 @@ function chessReducer(state, action) {
 
     case types.REPLAY:
       return { ...state, replayInProgress: action.inProgress };
+
+    case types.DRAGSTART:
+      return {
+        ...state,
+        lastMoveStatus: { from: action.square, maskIcon: true }
+      };
     default:
       return state;
   }

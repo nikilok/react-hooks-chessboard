@@ -10,6 +10,7 @@ const IconContainer = styled.div`
 
 const IconHover = styled.div`
   width: 120px;
+  height: 120px;
   border: 4px solid transparent;
   &:hover {
     background-color: ${COLORS.MOVETO};

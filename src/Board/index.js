@@ -8,6 +8,7 @@ import { COLORS } from "../common/modern-theme";
 
 const BoardContainer = styled.div`
   position: relative;
+  user-select: none;
 `;
 
 const ChessBoard = styled.div`
@@ -63,7 +64,8 @@ function Board({
     showMoveHighlights = true
   }
 }) {
-  const squareWidth = `${width / 8}px`;
+  const squareWidth = width / 8;
+  const squareWidthPx = `${squareWidth}px`;
   // prettier-ignore
   const boardColorPattern = [
                             0, 1, 0, 1, 0, 1, 0, 1, 
@@ -99,13 +101,13 @@ function Board({
   }
   return (
     <BoardContainer>
-      <ChessBoard width={squareWidth}>
+      <ChessBoard width={squareWidthPx}>
         {boardColorPattern.map((color, i) => {
           return <Square key={i} backgroundColor={color} />;
         })}
       </ChessBoard>
 
-      <BoardPiecesGrid width={squareWidth}>
+      <BoardPiecesGrid width={squareWidthPx}>
         {getPosition(orientation).map(({ type, color, square }, i) => {
           return (
             <SquareContainer key={i}>
@@ -124,6 +126,7 @@ function Board({
                 lastMoveStatus={lastMoveStatus}
                 showMoveHighlights={showMoveHighlights}
                 restrict={restrict}
+                width={squareWidth}
               />
             </SquareContainer>
           );
@@ -131,7 +134,7 @@ function Board({
       </BoardPiecesGrid>
 
       {animatePiece && (
-        <AnimatePiece animate={animatePiece} width={squareWidth} />
+        <AnimatePiece animate={animatePiece} width={squareWidthPx} />
       )}
     </BoardContainer>
   );

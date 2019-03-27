@@ -1,25 +1,38 @@
 import React, { useContext } from "react";
 import { COLORS } from "../common/modern-theme";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import ChessContext from "../context";
 import Icon from "./icon";
 
 const Container = styled.div`
+  width: 100px;
+  height: 100px;
+  background-color: ${props => props.color};
+
+  ${props =>
+    props.maskPiece &&
+    css`
+      ${IconContainer} {
+        filter: grayscale(100%);
+        opacity: 0.4;
+      }
+    `}
+`;
+
+const IconContainer = styled.div`
+  touch-action: none;
+  transform: translate(0px, 0px);
+  transition: all 0.3s;
+
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 100%;
-  height: 100%;
-  background-color: ${props => props.color};
-`;
-
-const MousePointer = styled.div`
-  width: 100%;
-  cursor: ${props =>
-    props.restrict.includes(props.color) ? "no-drop" : "grab"};
+  width: ${props => `${props.width}px`};
+  height: ${props => `${props.width}px`};
+  cursor: ${props => (props.freeToMove ? "grab" : "no-drop")};
 
   &:active {
-    cursor: ${props => !props.restrict.includes(props.color) && "grabbing"};
+    cursor: ${props => props.freeToMove && "grabbing"};
   }
 `;
 
@@ -45,7 +58,8 @@ function BoardPiece({
   lastMoveStatus = { from: "", to: "" },
   showMoveHighlights,
   restrict,
-  turn
+  turn,
+  width
 }) {
   const {
     dragStart: drag,
@@ -64,34 +78,37 @@ function BoardPiece({
     clearHighlight();
   }
 
-  const { from, to } = lastMoveStatus;
+  const { from, to, maskIcon } = lastMoveStatus;
 
-  let squareHighlightColor = "";
-  if (showMoveHighlights) {
+  let squareHighlightColor, maskPiece;
+  if (showMoveHighlights || maskIcon) {
     if (from === square) {
       squareHighlightColor = COLORS.MOVEFROM;
+      if (maskIcon) {
+        squareHighlightColor = undefined;
+        maskPiece = true;
+      }
     } else if (to === square) {
       squareHighlightColor = COLORS.MOVETO;
-    } else {
-      squareHighlightColor = undefined;
     }
   }
-
+  const ifFreeToMove = !restrictArray.includes(color);
   const PieceContainer = type && (
-    <MousePointer
-      color={color}
-      restrict={restrictArray}
-      draggable={true}
+    <IconContainer
+      draggable={ifFreeToMove}
+      freeToMove={ifFreeToMove}
+      width={width}
       onDragStart={() => drag(square, color, type, restrictArray)}
     >
       <Icon type={type} color={color} width="80%" />
-    </MousePointer>
+    </IconContainer>
   );
   return (
     <Container
       onClick={clickHandle}
       color={squareHighlightColor}
-      onDrop={event => drop(event, square)}
+      maskPiece={maskPiece}
+      onDrop={() => drop(square)}
       onDragOver={event => event.preventDefault()}
     >
       {PieceContainer}

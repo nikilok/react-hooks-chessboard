@@ -104,7 +104,10 @@ function App() {
    * @param {*} type
    */
   function dragStart(square, color, type, restrict) {
-    !restrict.includes(color) && setMoveDrag({ start: square, color, type });
+    if (!restrict.includes(color)) {
+      dispatch({ type: types.DRAGSTART, square });
+      setMoveDrag({ start: square, color, type });
+    }
   }
 
   /**
@@ -113,8 +116,7 @@ function App() {
    *
    * @param {*} square
    */
-  function drop(event, square) {
-    event.preventDefault();
+  function drop(square) {
     const { start, color, type } = moveDrag;
     const rowNumber = square.split("")[1];
 

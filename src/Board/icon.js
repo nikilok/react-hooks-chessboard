@@ -2,9 +2,12 @@ import React from "react";
 import styled from "styled-components";
 import * as ImageSet from "../icons/modern";
 
-const Piece = styled.img`
+const Piece = styled.div`
   width: ${props => props.width};
   height: ${props => props.width};
+  background-image: url(${props => props.src});
+  background-size: contain;
+  background-repeat: no-repeat;
 `;
 
 /**
