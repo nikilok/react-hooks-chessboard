@@ -108,7 +108,10 @@ function BoardPiece({
       onClick={clickHandle}
       color={squareHighlightColor}
       maskPiece={maskPiece}
-      onDrop={() => drop(square)}
+      onDrop={event => {
+        event.preventDefault();
+        drop(square);
+      }}
       onDragOver={event => event.preventDefault()}
     >
       {PieceContainer}
