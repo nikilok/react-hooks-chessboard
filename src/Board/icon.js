@@ -1,8 +1,16 @@
 import React from "react";
 import styled from "styled-components";
 import * as ImageSet from "../icons/modern";
+import isFireFox from "../common/browserDetect";
 
-const Piece = styled.img`
+const PieceAsBackgroundImg = styled.div`
+  width: ${props => props.width};
+  height: ${props => props.width};
+  background-position: contain;
+  background-repeat: no-repeat;
+`;
+
+const PieceAsImg = styled.img`
   width: ${props => props.width};
   height: ${props => props.width};
 `;
@@ -54,7 +62,21 @@ function Icon({ type, color, width }) {
         return;
     }
   }
-  return <Piece width={width} src={imgSrc} />;
+
+  /* Had to render an Img element for Firefox, and a div with background img for Safari and Chrome.
+    Reasons:
+      * In Firefox drag and drop failed when not an img element.
+      * In Safari drag operation does not show dragged image if Image element, and only showed drag images for div background image url.
+      * Chrome doesn't suffer from the above 2 problems that Firefox and Safari had.
+  */
+  return isFireFox ? (
+    <PieceAsImg src={imgSrc} width={width} />
+  ) : (
+    <PieceAsBackgroundImg
+      style={{ backgroundImage: `url(${imgSrc})` }}
+      width={width}
+    />
+  );
 }
 
 export default Icon;

@@ -20,10 +20,9 @@ const Container = styled.div`
 `;
 
 const IconContainer = styled.div`
+  transition: all 0.3s;
   touch-action: none;
   transform: translate(0px, 0px);
-  transition: all 0.3s;
-
   display: flex;
   justify-content: center;
   align-items: center;
