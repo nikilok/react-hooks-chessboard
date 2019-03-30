@@ -1,5 +1,11 @@
 import Chess from "chess.js";
 import * as types from "./constants";
+import socket from "../common/socket";
+import {
+  replay,
+  getFingerprint,
+  getOppositeColor
+} from "../common/chess-utilities";
 
 /**
  * The Chess Reducer Function that handles all the dispatched events
@@ -11,9 +17,44 @@ import * as types from "./constants";
 function chessReducer(state, action) {
   switch (action.type) {
     case types.INIT_BOARD:
+      getFingerprint().then(fingerprint => {
+        socket.emit("subscribeGameKeyInit", fingerprint);
+        socket.emit("getGameKey", fingerprint);
+      });
+
+      socket.on("getGameKey", function({ id: gameID, colorAllocated }) {
+        socket.emit("subscribe", gameID);
+        action.dispatch({
+          type: types.INIT_NETWORK_GAME,
+          gameID,
+          colorAllocated,
+          boardWidth: action.boardWidth,
+          dispatch: action.dispatch
+        });
+      });
+
       const chess = new Chess();
       const board = getBoard(chess);
       return { chess, board };
+
+    case types.INIT_NETWORK_GAME:
+      socket.on("move", function({ move, promotion }) {
+        replay(
+          move,
+          0,
+          action.dispatch,
+          action.boardWidth,
+          action.colorAllocated,
+          promotion
+        );
+      });
+
+      return {
+        ...state,
+        gameID: action.gameID,
+        orientation: action.colorAllocated,
+        restrict: getOppositeColor(action.colorAllocated)
+      };
 
     case types.MOVE:
       const lastMoveStatus =
@@ -22,7 +63,15 @@ function chessReducer(state, action) {
           to: action.to,
           promotion: action.promotion
         }) || undefined;
-
+      if (action.sendToServer === undefined) {
+        if (lastMoveStatus) {
+          socket.emit("move", {
+            move: [[action.from, action.to]],
+            promotion: action.promotion,
+            gameRoomID: state.gameID
+          });
+        }
+      }
       return {
         ...state,
         board: getBoard(state.chess),

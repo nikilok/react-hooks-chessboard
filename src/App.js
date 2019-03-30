@@ -7,6 +7,7 @@ import styled from "styled-components";
 import Board from "./Board";
 import Promotion from "./Board/promotion";
 import Modal from "./Modal";
+import { isPromotion } from "./common/chess-utilities";
 
 const Container = styled.div`
   text-align: center;
@@ -33,8 +34,7 @@ function App() {
     color: "",
     type: ""
   });
-  const boardWidth = 800,
-    orientation = "w";
+  const boardWidth = 800;
 
   /** Example moves only for testing a sequence of moves */
   const moves = [
@@ -55,44 +55,9 @@ function App() {
   ];
 
   useEffect(() => {
-    dispatch({ type: types.INIT_BOARD });
-    replay(moves, 1500);
+    dispatch({ type: types.INIT_BOARD, dispatch, boardWidth });
+    // replay(moves, 1500, dispatch, boardWidth, orientation);
   }, []);
-
-  /**
-   * Replay function takes in a moves array and replays it on the board.
-   * The timeout variable takes the milliseconds to wait before playing the next move.
-   *
-   * @param {*} moves
-   * @param {number} [timeout=1000]
-   */
-  function replay(moves, timeout = 1000) {
-    dispatch({ type: types.REPLAY, inProgress: true });
-    recursiveReplay(moves, timeout);
-
-    function recursiveReplay(moves, timeout) {
-      const [from, to] = moves.shift();
-      const animationDelay = timeout / 2.5;
-      setTimeout(() => {
-        dispatch({
-          type: types.ANIMATEMOVE,
-          from,
-          to,
-          boardWidth,
-          orientation,
-          animationDelay
-        });
-        setTimeout(() => {
-          dispatch({ type: types.MOVE, from, to });
-          if (moves.length > 0) {
-            replay(moves, timeout);
-          } else {
-            dispatch({ type: types.REPLAY, inProgress: false });
-          }
-        }, animationDelay); // Time period for completing the transition animation of the chess piece
-      }, timeout);
-    }
-  }
 
   /**
    * The Fn is called when the user starts to drag a chess piece.
@@ -120,7 +85,7 @@ function App() {
     const { start, color, type } = moveDrag;
     const rowNumber = square.split("")[1];
 
-    if (!isPromotion(rowNumber, color, type, start, square)) {
+    if (!isPromotion(rowNumber, color, type, start, square, state.chess)) {
       dispatch({ type: types.MOVE, from: start, to: square });
     } else {
       setMoveDrag({ ...moveDrag, to: square });
@@ -149,55 +114,6 @@ function App() {
     setShowPromotionUI(false);
   }
 
-  /**
-   * Fn that figures out if a White or Black pawn has trigerred a promotion.
-   * Returns True or False indicating if Promotion was triggered or not.
-   *
-   * @param {*} rowNumber
-   * @param {*} color
-   * @param {*} type
-   * @param {*} from
-   * @param {*} to
-   * @returns
-   */
-  function isPromotion(rowNumber, color, type, from, to) {
-    if (
-      (rowNumber === "8" && color === "w" && type === "p") ||
-      (rowNumber === "1" && color === "b" && type === "p")
-    ) {
-      if (isMoveValid(from, to)) {
-        return true;
-      }
-    }
-    return false;
-  }
-
-  /**
-   * Fn that returns an Array of all valid moves for a given square notation
-   *
-   * @param {*} from
-   * @returns
-   */
-  function getValidMoves(from) {
-    const validMovesVerbose = state.chess.moves({
-      square: from,
-      verbose: true
-    });
-    return Array.from(new Set(validMovesVerbose.map(({ to }) => to)));
-  }
-
-  /**
-   * Fn that figures out if the given From (Square Notation) -> To (Square Notation)
-   * move is valid or not. Returns a True (Valid) or False (InValid)
-   *
-   * @param {*} from
-   * @param {*} to
-   * @returns
-   */
-  function isMoveValid(from, to) {
-    return getValidMoves(from).includes(to);
-  }
-
   return (
     <ChessContext.Provider
       value={{
@@ -213,14 +129,14 @@ function App() {
             width={boardWidth}
             config={{
               showSquareLetters: true,
-              orientation: orientation,
+              orientation: state.orientation,
               showMoveHighlights: true
             }}
             position={state.board}
             lastMoveStatus={state.lastMoveStatus}
             animatePiece={state.animatePiece}
             turn={state.chess.turn}
-            restrict={[]}
+            restrict={[state.restrict]}
           />
         </TableBackground>
 
