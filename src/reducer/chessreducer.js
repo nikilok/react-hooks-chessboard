@@ -18,11 +18,20 @@ function chessReducer(state, action) {
   switch (action.type) {
     case types.INIT_BOARD:
       getFingerprint().then(fingerprint => {
-        socket.emit("subscribeGameKeyInit", fingerprint);
+        socket.emit("subscribe", fingerprint);
         socket.emit("getGameKey", fingerprint);
       });
 
-      socket.on("getGameKey", function({ id: gameID, colorAllocated }) {
+      socket.on("getGameKey", function({
+        id: gameID,
+        colorAllocated,
+        clientKey
+      }) {
+        console.log("Found game: ", gameID);
+
+        // Leave the original room with browser fingerprint, so you no longer listen for new game keys
+        socket.emit("unsubscribe", clientKey);
+        // Subscribe to the new game room
         socket.emit("subscribe", gameID);
         action.dispatch({
           type: types.INIT_NETWORK_GAME,
