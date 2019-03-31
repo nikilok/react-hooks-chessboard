@@ -36,24 +36,6 @@ function App() {
   });
   const boardWidth = 800;
 
-  /** Example moves only for testing a sequence of moves */
-  const moves = [
-    ["e2", "e4"],
-    ["e7", "e5"],
-    ["f1", "b5"],
-    ["f7", "f6"],
-    ["g1", "h3"],
-    ["b8", "a6"],
-    ["b5", "a6"],
-    ["b7", "a6"],
-    ["e1", "g1"],
-    ["c8", "b7"],
-    ["b1", "c3"],
-    ["d8", "e7"],
-    ["f2", "f3"],
-    ["e8", "c8"]
-  ];
-
   useEffect(() => {
     dispatch({ type: types.INIT_BOARD, dispatch, boardWidth });
     // replay(moves, 1500, dispatch, boardWidth, orientation);
