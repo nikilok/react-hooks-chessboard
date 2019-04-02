@@ -28,7 +28,6 @@ const IconHover = styled.div`
  * @returns
  */
 function Promotion({ color, promotionHandler }) {
-  console.log("TCL: Promotion -> color", color);
   const promotionPieces = ["q", "b", "n", "r"];
 
   const PromotionList = promotionPieces.map(pieceNotation => (
