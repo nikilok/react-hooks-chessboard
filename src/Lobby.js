@@ -10,7 +10,7 @@ const Background = createGlobalStyle`
     display: flex;
     justify-content: left;
     align-items: top;
-    padding: 20px;
+    padding: 50px;
  }
 `;
 const StartButton = styled.div`
