@@ -16,36 +16,9 @@ import {
  */
 function chessReducer(state, action) {
   switch (action.type) {
-    // case types.INIT_BOARD:
-    // getFingerprint().then(fingerprint => {
-    //   socket.emit("subscribe", fingerprint);
-    //   socket.emit("getGameKey", fingerprint);
-    // });
-
-    // socket.on("getGameKey", function({
-    //   id: gameID,
-    //   colorAllocated,
-    //   clientKey
-    // }) {
-    //   console.log("Found game: ", gameID);
-
-    //   // Leave the original room with browser fingerprint, so you no longer listen for new game keys
-    //   socket.emit("unsubscribe", clientKey);
-    //   // Subscribe to the new game room
-    //   socket.emit("subscribe", gameID);
-    // });
-    // action.dispatch({
-    //   type: types.INIT_NETWORK_GAME,
-    //   gameID,
-    //   colorAllocated,
-    //   boardWidth: action.boardWidth,
-    //   dispatch: action.dispatch
-    // });
-
     case types.INIT_BOARD:
       const chess = new Chess(action.fen);
       const board = getBoard(chess);
-      // return { chess, board };
       socket.on("move", function({ move, promotion }) {
         replay(
           move,
