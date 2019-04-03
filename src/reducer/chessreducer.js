@@ -1,11 +1,7 @@
 import Chess from "chess.js";
 import * as types from "./constants";
 import socket from "../common/socket";
-import {
-  replay,
-  getFingerprint,
-  getOppositeColor
-} from "../common/chess-utilities";
+import { replay, getOppositeColor } from "../common/chess-utilities";
 
 /**
  * The Chess Reducer Function that handles all the dispatched events
