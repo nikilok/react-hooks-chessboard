@@ -43,7 +43,8 @@ function Game({ gameID, orientation, history, fen }) {
       boardWidth,
       orientation,
       gameID,
-      fen
+      fen,
+      history
     });
   }, []);
 
