@@ -1,10 +1,20 @@
 import * as types from "./constants";
 import socket from "../common/socket";
-import { getFingerprint, getOppositeColor } from "../common/chess-utilities";
+import { serviceUrl } from "../config.json";
+import { getFingerprint } from "../common/chess-utilities";
 
 function lobbyReducer(state, action) {
-  let colorAllocated, gameID;
   switch (action.type) {
+    case types.CHECK_RESUME_GAME:
+      getFingerprint().then(fingerprint => {
+        fetch(`${serviceUrl}/gamestatus/${fingerprint}`)
+          .then(response => response.json())
+          .then(({ status }) => {
+            action.dispatch({ type: types.RESUME_UPDATE, status });
+          });
+      });
+    case types.RESUME_UPDATE:
+      return { ...state, onGoingGame: action.status };
     case types.QUICK_PLAY:
       getFingerprint().then(fingerprint => {
         socket.emit("subscribe", fingerprint);
@@ -14,12 +24,10 @@ function lobbyReducer(state, action) {
       socket.on(
         "getGameKey",
         ({ id: gameID, colorAllocated, clientKey, history, fen }) => {
-          console.log("TCL: lobbyReducer -> history", history);
           // Leave the original room with browser fingerprint, so you no longer listen for new game keys
           socket.emit("unsubscribe", clientKey);
           // Subscribe to the new game room
           socket.emit("subscribe", gameID);
-          console.log("Found game: ", gameID);
           socket.emit("isGameReady", gameID);
           socket.on("isGameReady", isGameReady => {
             const ready = isGameReady.player2Available;
@@ -39,10 +47,10 @@ function lobbyReducer(state, action) {
           });
         }
       );
-      return {};
 
     case types.STARTGAME:
       return {
+        ...state,
         gameID: action.gameID,
         orientation: action.colorAllocated,
         history: action.history,
@@ -52,6 +60,7 @@ function lobbyReducer(state, action) {
 
     case types.SEARCHING:
       return {
+        ...state,
         isLoading: true
       };
     default:

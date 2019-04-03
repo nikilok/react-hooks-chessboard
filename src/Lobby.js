@@ -1,6 +1,5 @@
 import React from "react";
 import styled, { createGlobalStyle } from "styled-components";
-import { COLORS } from "./common/modern-theme";
 import backdrop from "./icons/backdrop.jpg";
 import Load from "./Loader";
 
@@ -38,7 +37,7 @@ const LoadContainer = styled.div`
   margin-top: 10px;
 `;
 
-function Lobby({ quickPlayHandler, isLoading }) {
+function Lobby({ quickPlayHandler, isLoading, onGoingGame }) {
   return (
     <React.Fragment>
       <Background />
@@ -50,6 +49,8 @@ function Lobby({ quickPlayHandler, isLoading }) {
               <Load width="50px" height="50px" />
             </LoadContainer>
           </Search>
+        ) : onGoingGame ? (
+          "Rejoin"
         ) : (
           "Start"
         )}

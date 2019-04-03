@@ -1,5 +1,5 @@
 import React, { useReducer, useEffect } from "react";
-import { BrowserRouter as Router, Route, Redirect } from "react-router-dom";
+import { BrowserRouter as Router, Route } from "react-router-dom";
 import lobbyReducer from "./reducer/lobbyreducer";
 import * as types from "./reducer/constants";
 
@@ -14,13 +14,15 @@ function App() {
     isLoading: undefined
   });
 
+  useEffect(() => {
+    dispatch({ type: types.CHECK_RESUME_GAME, dispatch });
+  }, []);
+
   function quickPlay() {
-    console.log("Quick Play Search");
     dispatch({ type: types.QUICK_PLAY, dispatch });
   }
 
   if (lobbyState.gameID) {
-    console.log("TCL: App -> lobbyState.gameID", lobbyState.gameID);
     return (
       <Game
         gameID={lobbyState.gameID}
@@ -40,6 +42,7 @@ function App() {
           <Lobby
             quickPlayHandler={quickPlay}
             isLoading={lobbyState.isLoading}
+            onGoingGame={lobbyState.onGoingGame}
           />
         )}
       />
