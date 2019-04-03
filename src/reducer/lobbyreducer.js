@@ -13,7 +13,7 @@ function lobbyReducer(state, action) {
 
       socket.on(
         "getGameKey",
-        ({ id: gameID, colorAllocated, clientKey, history }) => {
+        ({ id: gameID, colorAllocated, clientKey, history, fen }) => {
           console.log("TCL: lobbyReducer -> history", history);
           // Leave the original room with browser fingerprint, so you no longer listen for new game keys
           socket.emit("unsubscribe", clientKey);
@@ -27,7 +27,9 @@ function lobbyReducer(state, action) {
               action.dispatch({
                 type: types.STARTGAME,
                 gameID,
-                colorAllocated
+                colorAllocated,
+                history,
+                fen
               });
             } else {
               action.dispatch({
@@ -43,6 +45,8 @@ function lobbyReducer(state, action) {
       return {
         gameID: action.gameID,
         orientation: action.colorAllocated,
+        history: action.history,
+        fen: action.fen,
         isLoading: false
       };
 

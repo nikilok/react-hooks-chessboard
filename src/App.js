@@ -22,7 +22,12 @@ function App() {
   if (lobbyState.gameID) {
     console.log("TCL: App -> lobbyState.gameID", lobbyState.gameID);
     return (
-      <Game gameID={lobbyState.gameID} orientation={lobbyState.orientation} />
+      <Game
+        gameID={lobbyState.gameID}
+        orientation={lobbyState.orientation}
+        history={lobbyState.history}
+        fen={lobbyState.fen}
+      />
     );
   }
 

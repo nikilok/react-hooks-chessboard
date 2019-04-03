@@ -22,7 +22,7 @@ const TableBackground = styled.div`
   justify-content: center;
 `;
 
-function Game({ gameID, orientation }) {
+function Game({ gameID, orientation, history, fen }) {
   const [state, dispatch] = useReducer(chessReducer, {
     chess: { turn: () => {} },
     board: []
@@ -42,7 +42,8 @@ function Game({ gameID, orientation }) {
       dispatch,
       boardWidth,
       orientation,
-      gameID
+      gameID,
+      fen
     });
   }, []);
 

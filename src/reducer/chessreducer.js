@@ -43,7 +43,7 @@ function chessReducer(state, action) {
     // });
 
     case types.INIT_BOARD:
-      const chess = new Chess();
+      const chess = new Chess(action.fen);
       const board = getBoard(chess);
       // return { chess, board };
       socket.on("move", function({ move, promotion }) {
@@ -77,6 +77,7 @@ function chessReducer(state, action) {
         if (lastMoveStatus) {
           socket.emit("move", {
             move: [[action.from, action.to]],
+            fen: state.chess.fen(),
             promotion: action.promotion,
             gameRoomID: state.gameID
           });
