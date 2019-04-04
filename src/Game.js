@@ -7,13 +7,23 @@ import styled from "styled-components";
 import Board from "./Board";
 import Promotion from "./Board/promotion";
 import Modal from "./Modal";
+import GameInfo from "./GameInfo";
 import { isPromotion } from "./common/chess-utilities";
+import socket from "./common/socket";
 
 const Container = styled.div`
   text-align: center;
+  background-color: white;
+  display: grid;
+  grid-template-areas:
+    "boardarea"
+    "infoarea";
+  flex-direction: column;
+  align-items: flex-start;
 `;
 
 const TableBackground = styled.div`
+  grid-area: boardarea;
   background-color: ${COLORS.TABLEBACKGROUND};
   min-height: 100vh;
   display: flex;
@@ -22,7 +32,23 @@ const TableBackground = styled.div`
   justify-content: center;
 `;
 
-function Game({ gameID, orientation, history, fen }) {
+const GameInfoArea = styled.div`
+  grid-area: infoarea;
+  display: flex;
+  flex-direction: column;
+  justify-content: left;
+  align-items: flex-start;
+  margin: auto;
+  padding: 10px 95px 10px 95px;
+  background-color: white;
+`;
+
+/**
+ * The Game component handles everything about the game experience.
+ * It has the chess board, and all other UI elements required for the game experience.
+ * @param {gameID}
+ */
+function Game({ gameID, orientation, history, fen, leaveGameHandler }) {
   const [state, dispatch] = useReducer(chessReducer, {
     chess: { turn: () => {} },
     board: []
@@ -46,7 +72,13 @@ function Game({ gameID, orientation, history, fen }) {
       fen,
       history
     });
-  }, []);
+
+    return () => {
+      /* Component unmount cleanup events */
+      socket.removeAllListeners();
+      dispatch({ type: types.RESET_GAME_REDUCER });
+    };
+  }, [gameID]);
 
   /**
    * The Fn is called when the user starts to drag a chess piece.
@@ -140,6 +172,14 @@ function Game({ gameID, orientation, history, fen }) {
           <Modal title="Game Over">{state.gameOverReason}</Modal>
         )}
       </Container>
+
+      <GameInfoArea>
+        <GameInfo
+          turn={state.chess.turn}
+          orientation={state.orientation}
+          leaveGameHandler={leaveGameHandler}
+        />
+      </GameInfoArea>
     </ChessContext.Provider>
   );
 }

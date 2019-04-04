@@ -45,7 +45,6 @@ function chessReducer(state, action) {
           to: action.to,
           promotion: action.promotion
         }) || undefined;
-      console.log("TCL: chessReducer -> lastMoveStatus", lastMoveStatus);
       if (action.sendToServer === undefined) {
         if (lastMoveStatus) {
           socket.emit("move", {
@@ -95,6 +94,11 @@ function chessReducer(state, action) {
       return {
         ...state,
         lastMoveStatus: { from: action.square, maskIcon: true }
+      };
+    case types.RESET_GAME_REDUCER:
+      return {
+        chess: { turn: () => {} },
+        board: []
       };
     default:
       return state;

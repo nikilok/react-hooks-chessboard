@@ -10,8 +10,8 @@ function App() {
   const [lobbyState, dispatch] = useReducer(lobbyReducer, {
     gameID: undefined,
     orientation: undefined,
-    noPlayers: undefined,
-    isLoading: undefined
+    isLoading: undefined,
+    fingerprint: undefined
   });
 
   useEffect(() => {
@@ -22,6 +22,10 @@ function App() {
     dispatch({ type: types.QUICK_PLAY, dispatch });
   }
 
+  function leaveGame() {
+    dispatch({ type: types.LEAVEGAME, dispatch });
+  }
+
   if (lobbyState.gameID) {
     return (
       <Game
@@ -29,6 +33,7 @@ function App() {
         orientation={lobbyState.orientation}
         history={lobbyState.history}
         fen={lobbyState.fen}
+        leaveGameHandler={leaveGame}
       />
     );
   }

@@ -52,7 +52,7 @@ function Lobby({ quickPlayHandler, isLoading, onGoingGame }) {
         ) : onGoingGame ? (
           "Rejoin"
         ) : (
-          "Start"
+          "Quick Play"
         )}
       </StartButton>
     </React.Fragment>

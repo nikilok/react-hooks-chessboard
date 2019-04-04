@@ -37,7 +37,8 @@ function lobbyReducer(state, action) {
                 gameID,
                 colorAllocated,
                 history,
-                fen
+                fen,
+                clientKey
               });
             } else {
               action.dispatch({
@@ -48,13 +49,21 @@ function lobbyReducer(state, action) {
         }
       );
 
+      socket.on("leaveGame", ({ leaveGame, gameID }) => {
+        if (leaveGame) {
+          socket.emit("unsubscribe", gameID);
+          action.dispatch({ type: types.EXIT_TO_LOBBY });
+        }
+      });
+
     case types.STARTGAME:
       return {
         ...state,
         gameID: action.gameID,
         orientation: action.colorAllocated,
-        history: action.history,
+        history: action.history || [],
         fen: action.fen,
+        fingerprint: action.clientKey,
         isLoading: false
       };
 
@@ -62,6 +71,17 @@ function lobbyReducer(state, action) {
       return {
         ...state,
         isLoading: true
+      };
+
+    case types.LEAVEGAME:
+      socket.emit("leaveGame", state.fingerprint, state.gameID);
+
+    case types.EXIT_TO_LOBBY:
+      return {
+        gameID: undefined,
+        orientation: undefined,
+        isLoading: undefined,
+        fingerprint: undefined
       };
     default:
       return state;
