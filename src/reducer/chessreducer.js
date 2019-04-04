@@ -22,7 +22,7 @@ function chessReducer(state, action) {
           move,
           0,
           action.dispatch,
-          action.boardWidth,
+          window.innerHeight - 97,
           action.orientation,
           promotion
         );

@@ -1,5 +1,6 @@
 import React, { useEffect, useReducer, useState } from "react";
 import { COLORS } from "./common/modern-theme";
+import useBoardSize from "./common/boardSizeHook";
 import ChessContext from "./context";
 import chessReducer from "./reducer/chessreducer";
 import * as types from "./reducer/constants";
@@ -60,13 +61,12 @@ function Game({ gameID, orientation, history, fen, leaveGameHandler }) {
     color: "",
     type: ""
   });
-  const boardWidth = 800;
+  const boardWidth = useBoardSize(97);
 
   useEffect(() => {
     dispatch({
       type: types.INIT_BOARD,
       dispatch,
-      boardWidth,
       orientation,
       gameID,
       fen,

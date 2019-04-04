@@ -5,8 +5,8 @@ import ChessContext from "../context";
 import Icon from "./icon";
 
 const Container = styled.div`
-  width: 100px;
-  height: 100px;
+  width: ${props => `${props.width}px`};
+  height: ${props => `${props.width}px`};
   background-color: ${props => props.color};
 
   ${props =>
@@ -112,6 +112,7 @@ function BoardPiece({
         drop(square);
       }}
       onDragOver={event => event.preventDefault()}
+      width={width}
     >
       {PieceContainer}
     </Container>
