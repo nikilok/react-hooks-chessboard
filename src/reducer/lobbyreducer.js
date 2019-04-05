@@ -66,6 +66,17 @@ function lobbyReducer(state, action) {
         }
       });
 
+      socket.on("playerDisconnect", ({ status }) => {
+        if (status) {
+          action.notify({
+            title: CONSTANT.PLAYER_DISCONNECT_TITLE,
+            type: "warning",
+            message: CONSTANT.PLAYER_DISCONNECT_MESSAGE,
+            duration: 10000
+          });
+        }
+      });
+
     case types.STARTGAME:
       return {
         ...state,
