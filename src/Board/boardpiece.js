@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { COLORS } from "../common/modern-theme";
 import styled, { css } from "styled-components";
-import ChessContext from "../context";
+import ChessContext from "../context/ChessContext";
 import Icon from "./icon";
 
 const Container = styled.div`

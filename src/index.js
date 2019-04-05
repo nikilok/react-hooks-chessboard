@@ -1,5 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import Notification from "./Notification";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 import GlobalStyle from "./common/globalStyles";
@@ -7,7 +8,9 @@ import GlobalStyle from "./common/globalStyles";
 ReactDOM.render(
   <React.Fragment>
     <GlobalStyle />
-    <App />
+    <Notification>
+      <App />
+    </Notification>
   </React.Fragment>,
   document.getElementById("root")
 );

@@ -1,7 +1,7 @@
 import React, { useEffect, useReducer, useState } from "react";
 import { COLORS } from "./common/modern-theme";
 import useBoardSize from "./common/boardSizeHook";
-import ChessContext from "./context";
+import ChessContext from "./context/ChessContext";
 import chessReducer from "./reducer/chessreducer";
 import * as types from "./reducer/constants";
 import styled from "styled-components";

@@ -1,4 +1,5 @@
 import * as types from "./constants";
+import * as CONSTANT from "../common/appConstant";
 import socket from "../common/socket";
 import { serviceUrl } from "../config.json";
 import { getFingerprint } from "../common/chess-utilities";
@@ -52,7 +53,16 @@ function lobbyReducer(state, action) {
       socket.on("leaveGame", ({ leaveGame, gameID }) => {
         if (leaveGame) {
           socket.emit("unsubscribe", gameID);
-          action.dispatch({ type: types.EXIT_TO_LOBBY });
+          action.notify({
+            title: CONSTANT.GAME_LEAVE_TITLE,
+            type: "danger",
+            message: CONSTANT.GAME_LEAVE_MSG,
+            duration: 4000
+          });
+          /* 5 seconds before exiting the user out to the lobby */
+          setTimeout(() => {
+            action.dispatch({ type: types.EXIT_TO_LOBBY });
+          }, 5000);
         }
       });
 

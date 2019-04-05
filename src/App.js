@@ -1,7 +1,8 @@
-import React, { useReducer, useEffect } from "react";
+import React, { useReducer, useEffect, useContext } from "react";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import lobbyReducer from "./reducer/lobbyreducer";
 import * as types from "./reducer/constants";
+import NotificationContext from "./context/NotificationContext";
 
 import Game from "./Game";
 import Lobby from "./Lobby";
@@ -13,13 +14,14 @@ function App() {
     isLoading: undefined,
     fingerprint: undefined
   });
+  const notify = useContext(NotificationContext);
 
   useEffect(() => {
     dispatch({ type: types.CHECK_RESUME_GAME, dispatch });
   }, []);
 
   function quickPlay() {
-    dispatch({ type: types.QUICK_PLAY, dispatch });
+    dispatch({ type: types.QUICK_PLAY, dispatch, notify });
   }
 
   function leaveGame() {
