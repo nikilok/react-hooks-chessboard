@@ -2,6 +2,7 @@ import React from "react";
 import styled, { createGlobalStyle } from "styled-components";
 import backdrop from "./icons/backdrop.jpg";
 import Load from "./Loader";
+import OneAccount from "oneaccount-react";
 
 const Background = createGlobalStyle`
  html {
@@ -41,6 +42,15 @@ function Lobby({ quickPlayHandler, isLoading, onGoingGame }) {
   return (
     <React.Fragment>
       <Background />
+      <OneAccount
+        externalId="3cac812d-8556-4478-b5ab-32903e124562"
+        floatingMode={true}
+        useSMIL={true}
+        useFilter={true}
+        onUpdate={uid => {
+          console.log("TCL: Lobby -> uid", uid);
+        }}
+      />
       <StartButton onClick={quickPlayHandler}>
         {isLoading ? (
           <Search>
