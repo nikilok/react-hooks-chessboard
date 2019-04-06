@@ -6,7 +6,7 @@ import isFireFox from "../common/browserDetect";
 const PieceAsBackgroundImg = styled.div`
   width: ${props => props.width};
   height: ${props => props.width};
-  background-position: contain;
+  background-size: contain;
   background-repeat: no-repeat;
 `;
 
