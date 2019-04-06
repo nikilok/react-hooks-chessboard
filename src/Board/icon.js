@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import * as ImageSet from "../icons/modern";
+import * as ImageSet from "../icons/modern-dark";
 import isFireFox from "../common/browserDetect";
 
 const PieceAsBackgroundImg = styled.div`
