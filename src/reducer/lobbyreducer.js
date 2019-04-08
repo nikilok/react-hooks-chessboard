@@ -66,6 +66,22 @@ function lobbyReducer(state, action) {
         }
       });
 
+      socket.on("terminateGame", ({ leaveGame, gameID }) => {
+        if (leaveGame) {
+          socket.emit("unsubscribe", gameID);
+          action.notify({
+            title: CONSTANT.GAME_LEAVE_TITLE,
+            type: "danger",
+            message: CONSTANT.GAME_TERMINATE_MSG,
+            duration: 4000
+          });
+          /* 5 seconds before exiting the user out to the lobby */
+          setTimeout(() => {
+            action.dispatch({ type: types.EXIT_TO_LOBBY });
+          }, 5000);
+        }
+      });
+
       socket.on("playerDisconnect", ({ status }) => {
         if (status) {
           action.notify({
@@ -73,6 +89,15 @@ function lobbyReducer(state, action) {
             type: "warning",
             message: CONSTANT.PLAYER_DISCONNECT_MESSAGE,
             duration: 10000
+          });
+        }
+      });
+
+      socket.on("playerReconnected", status => {
+        if (status) {
+          action.notify({
+            title: CONSTANT.PLAYER_RECONNECTED_TITLE,
+            message: CONSTANT.PLAYER_RECONNECTED_MESSAGE
           });
         }
       });

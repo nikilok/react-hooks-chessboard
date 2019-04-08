@@ -15,7 +15,7 @@ function Notification({ children }) {
       container: config.position || "top-center",
       animationIn: config.animationIn || ["animated", "fadeIn"],
       animationOut: config.animationOut || ["animated", "fadeOut"],
-      dismiss: { duration: config.duration || 2000 },
+      dismiss: { duration: config.duration || 5000 },
       dismissable: { click: true }
     });
   }
