@@ -1,4 +1,4 @@
-import React, { useEffect, useReducer, useState } from "react";
+import React, { useEffect, useReducer, useState, useRef } from "react";
 import { COLORS } from "./common/modern-theme";
 import useBoardSize from "./common/boardSizeHook";
 import ChessContext from "./context/ChessContext";
@@ -11,6 +11,7 @@ import Modal from "./Modal";
 import GameInfo from "./GameInfo";
 import { isPromotion } from "./common/chess-utilities";
 import socket from "./common/socket";
+import downArrowImg from "./icons/down-arrow.png";
 
 const Container = styled.div`
   text-align: center;
@@ -44,6 +45,20 @@ const GameInfoArea = styled.div`
   background-color: white;
 `;
 
+const DownArrow = styled.img`
+  filter: grayscale(100);
+  margin-top: -61px;
+  margin-left: 10px;
+  width: 60px;
+  height: 60px;
+  opacity: 0.5;
+  transition: 0.3s;
+  cursor: pointer;
+  &:hover {
+    opacity: 1;
+    filter: grayscale(0);
+  }
+`;
 /**
  * The Game component handles everything about the game experience.
  * It has the chess board, and all other UI elements required for the game experience.
@@ -62,6 +77,7 @@ function Game({ gameID, orientation, history, fen, leaveGameHandler }) {
     type: ""
   });
   const boardWidth = useBoardSize(97);
+  const gameInfoRef = useRef(null);
 
   useEffect(() => {
     dispatch({
@@ -123,6 +139,10 @@ function Game({ gameID, orientation, history, fen, leaveGameHandler }) {
     dispatch({ type: types.CLEARHIGHLIGHT });
   }
 
+  function scrollDown() {
+    gameInfoRef.current.scrollIntoView();
+  }
+
   /**
    * Event handler for when a successful Pawn promotion is made.
    * The Fn closes the Promotion UI after the user has made a choice.
@@ -167,6 +187,8 @@ function Game({ gameID, orientation, history, fen, leaveGameHandler }) {
           />
         </TableBackground>
 
+        <DownArrow src={downArrowImg} onClick={scrollDown} />
+
         {showPromotionUI && (
           <Promotion
             color={moveDrag.color}
@@ -179,7 +201,7 @@ function Game({ gameID, orientation, history, fen, leaveGameHandler }) {
         )}
       </Container>
 
-      <GameInfoArea>
+      <GameInfoArea ref={gameInfoRef}>
         <GameInfo
           turn={state.chess.turn}
           orientation={state.orientation}
