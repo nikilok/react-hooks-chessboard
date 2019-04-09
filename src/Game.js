@@ -107,7 +107,12 @@ function Game({ gameID, orientation, history, fen, leaveGameHandler }) {
     const rowNumber = square.split("")[1];
 
     if (!isPromotion(rowNumber, color, type, start, square, state.chess)) {
-      dispatch({ type: types.MOVE, from: start, to: square });
+      dispatch({
+        type: types.MOVE,
+        from: start,
+        to: square,
+        leaveGameHandler: leaveGameHandler
+      });
     } else {
       setMoveDrag({ ...moveDrag, to: square });
       setShowPromotionUI(true);
@@ -130,7 +135,8 @@ function Game({ gameID, orientation, history, fen, leaveGameHandler }) {
       type: types.MOVE,
       from: start,
       to,
-      promotion: promotedPiece
+      promotion: promotedPiece,
+      leaveGameHandler: leaveGameHandler
     });
     setShowPromotionUI(false);
   }

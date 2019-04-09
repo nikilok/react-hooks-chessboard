@@ -1,6 +1,6 @@
 const GAME_LEAVE_MSG =
-    "Your game will close in 5 seconds as the other player left the game",
-  GAME_LEAVE_TITLE = "game shutdown",
+    "Your game will close in 5 seconds as the game was concluded by the other player.",
+  GAME_LEAVE_TITLE = "game over",
   PLAYER_DISCONNECT_TITLE = "Player Disconnect",
   GAME_TERMINATE_MSG =
     "The game is ending, as all players did not rejoin back before 6 minutes.",

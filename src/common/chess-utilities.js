@@ -86,7 +86,8 @@ function replay(
           from,
           to,
           sendToServer: false,
-          promotion
+          promotion,
+          leaveGameHandler: () => {}
         });
         if (moves.length > 0) {
           recursiveReplay(moves, timeout);

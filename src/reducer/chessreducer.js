@@ -60,7 +60,7 @@ function chessReducer(state, action) {
         board: getBoard(state.chess),
         lastMoveStatus,
         isGameOver: state.chess.game_over(),
-        gameOverReason: reasonForGameOver(state.chess),
+        gameOverReason: reasonForGameOver(state.chess, action.leaveGameHandler),
         history: state.chess.history(),
         animatePiece: undefined
       };
@@ -172,22 +172,34 @@ function getBoard(chessObj) {
   });
 }
 
+function delayLeaveGame(time, leaveGameHandler) {
+  setTimeout(() => {
+    leaveGameHandler();
+  }, time);
+}
+
 /**
  * Fn that figures out the reason the game was concluded.
  *
  * @param {*} chessObj
  * @returns
  */
-function reasonForGameOver(chessObj) {
+function reasonForGameOver(chessObj, leaveGameHandler) {
+  const time = 5000;
   if (chessObj.in_checkmate()) {
+    delayLeaveGame(time, leaveGameHandler);
     return "Check Mate";
   } else if (chessObj.in_threefold_repetition()) {
+    delayLeaveGame(time, leaveGameHandler);
     return "Three Fold Repetition";
   } else if (chessObj.in_draw()) {
+    delayLeaveGame(time, leaveGameHandler);
     return "Draw";
   } else if (chessObj.in_stalemate()) {
+    delayLeaveGame(time, leaveGameHandler);
     return "Stale Mate";
   } else if (chessObj.insufficient_material()) {
+    delayLeaveGame(time, leaveGameHandler);
     return "Insufficent Material Draw";
   }
 }
