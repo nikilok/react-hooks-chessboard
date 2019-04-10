@@ -4,12 +4,14 @@
   "private": true,
   "dependencies": {
     "chess.js": "^0.10.2",
+    "express": "^4.16.4",
     "fingerprintjs2": "^2.0.6",
+    "path": "^0.12.7",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
+    "react-scripts": "^2.1.8",
     "react-notifications-component": "^1.1.1",
     "react-router-dom": "^5.0.0",
-    "react-scripts": "2.1.8",
     "socket.io-client": "^2.2.0",
     "styled-components": "^4.1.3"
   },
