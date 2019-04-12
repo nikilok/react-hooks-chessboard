@@ -5,7 +5,7 @@ steps:
 
   # Build production optimized site
   - name: "gcr.io/cloud-builders/npm"
-    args: ["run build"]
+    args: ["run", "build"]
 
   # Package Docker image
   - name: "gcr.io/cloud-builders/docker"
@@ -16,3 +16,15 @@ steps:
   # Push the docker image to the registry
   - name: "gcr.io/cloud-builders/docker"
     args: ["push", "$_ZONE/$PROJECT_ID/$_IMAGE_NAME:$TAG_NAME"]
+
+  # DEPLOY to Server
+  - name: "gcr.io/cloud-builders/gcloud"
+    args:
+      [
+        "beta",
+        "compute",
+        "instances",
+        "update-container",
+        "$_SERVER_INSTANCE_NAME",
+        "--container-image=$_ZONE/$PROJECT_ID/$_IMAGE_NAME:$TAG_NAME",
+      ]
