@@ -38,7 +38,7 @@ const LoadContainer = styled.div`
 `;
 
 const Version = styled.div`
-  font-size: 0.01em;
+  font-size: 10px;
   font-family: sans-serif;
   /* font-style: italic; */
   position: fixed;
@@ -50,7 +50,7 @@ const Version = styled.div`
   display: flex;
   align-items: flex-end;
   justify-content: center;
-  padding: 0 10px;
+  padding: 0 5px;
 `;
 
 function Lobby({ quickPlayHandler, isLoading, onGoingGame }) {
