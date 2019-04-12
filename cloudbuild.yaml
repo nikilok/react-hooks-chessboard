@@ -26,5 +26,7 @@ steps:
         "instances",
         "update-container",
         "$_SERVER_INSTANCE_NAME",
+        "--zone",
+        "$_ZONE",
         "--container-image=$_ZONE/$PROJECT_ID/$_IMAGE_NAME:$TAG_NAME",
       ]
