@@ -5,7 +5,7 @@ steps:
 
   # Build production optimized site
   - name: "gcr.io/cloud-builders/npm"
-    args: ["run", "build"]
+    args: ["run build"]
 
   # Package Docker image
   - name: "gcr.io/cloud-builders/docker"
