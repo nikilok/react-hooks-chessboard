@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "Master Chess",
+  "name": "Masterchess.de, the online multiplayer chess game",
   "icons": [
     {
       "src": "favicon.ico",
