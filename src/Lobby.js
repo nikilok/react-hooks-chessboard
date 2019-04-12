@@ -7,6 +7,7 @@ import Load from "./Loader";
 const Background = createGlobalStyle`
  html {
     background: url(${backdrop}) no-repeat center center fixed; 
+    background-size: cover;
     display: flex;
     justify-content: left;
     align-items: top;
