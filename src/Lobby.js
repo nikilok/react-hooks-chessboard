@@ -1,6 +1,7 @@
 import React from "react";
 import styled, { createGlobalStyle } from "styled-components";
 import backdrop from "./icons/backdrop.jpg";
+import logo from "./icons/logo.png";
 import Load from "./Loader";
 
 const Background = createGlobalStyle`
@@ -14,7 +15,7 @@ const Background = createGlobalStyle`
 `;
 const StartButton = styled.div`
   margin-top: 100px;
-  font-size: 4em;
+  font-size: 3.5em;
   color: white;
   cursor: pointer;
   transition: 0.3s;
@@ -40,23 +41,28 @@ const LoadContainer = styled.div`
 const Version = styled.div`
   font-size: 10px;
   font-family: sans-serif;
-  /* font-style: italic; */
   position: fixed;
   right: 10px;
   bottom: -7px;
   color: white;
   height: 23px;
-  background-color: black;
+  background-color: rgba(0, 0, 0, 0.5);
   display: flex;
   align-items: flex-end;
   justify-content: center;
   padding: 0 5px;
 `;
 
+const Icon = styled.img`
+  height: 117px;
+  width: 200px;
+`;
+
 function Lobby({ quickPlayHandler, isLoading, onGoingGame }) {
   return (
     <React.Fragment>
       <Background />
+      <Icon src={logo} alt="Masterchess.de" />
       <StartButton onClick={quickPlayHandler}>
         {isLoading ? (
           <Search>
@@ -71,9 +77,9 @@ function Lobby({ quickPlayHandler, isLoading, onGoingGame }) {
           "Quick Play"
         )}
         <Version>
-          Copyrights {1900 + new Date().getYear()} Masterchess.de
+          Copyright © {1900 + new Date().getYear()} Masterchess.de
           {process.env.REACT_APP_VERSION &&
-            ` ,ver: ${process.env.REACT_APP_VERSION}`}
+            ` ,${process.env.REACT_APP_VERSION}`}
         </Version>
       </StartButton>
     </React.Fragment>

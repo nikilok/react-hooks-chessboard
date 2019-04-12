@@ -12,6 +12,9 @@ const GlobalStyles = createGlobalStyle`
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
+html {
+    background-color: black;
+}
 @font-face {
     font-family: Big Noodle Too,impact,sans-serif;
     font-size: 31px;
