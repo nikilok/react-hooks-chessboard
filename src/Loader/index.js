@@ -2,7 +2,8 @@ import React from "react";
 import styled, { keyframes } from "styled-components";
 
 const LoaderContainer = styled.div`
-  position: relative;
+  position: absolute;
+  top: -25px;
   text-align: center;
   height: 100%;
   &:before {

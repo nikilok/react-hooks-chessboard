@@ -36,6 +36,7 @@ const SearchLabel = styled.div`
 
 const LoadContainer = styled.div`
   margin-top: 10px;
+  position: relative;
 `;
 
 const Version = styled.div`
