@@ -4,7 +4,7 @@ RUN mkdir -p /usr/src/app/
 WORKDIR /usr/src/app
 ENV PORT 80
 
-# Add required folders/files to the container
+# Add required content to the container
 ADD node_modules ./node_modules
 ADD build ./build
 ADD server.js ./
