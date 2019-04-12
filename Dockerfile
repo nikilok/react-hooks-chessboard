@@ -4,8 +4,13 @@ RUN mkdir -p /usr/src/app/
 WORKDIR /usr/src/app
 ENV PORT 80
 
+# Only installing those packages required by server.js here,
+# as the CI installed the UI packages required for the build.
+# This helps reduce the image size pushed on the registry to the lowest.
+# Attention if you add newer packages required by server.js please intall them here too.
+RUN npm i express path --production
+
 # Add required content to the container
-ADD node_modules ./node_modules
 ADD build ./build
 ADD server.js ./
 
