@@ -44,7 +44,7 @@ function App() {
     <Router>
       <Route
         exact={true}
-        path="/"
+        path="/*"
         render={() => (
           <Lobby
             quickPlayHandler={quickPlay}
@@ -53,18 +53,6 @@ function App() {
           />
         )}
       />
-
-      {/* <Route
-        exact={true}
-        path="/g/:gameId"
-        render={({ match }) => (
-          <Game
-            match={match}
-            gameID={lobbyState.gameID}
-            orientation={lobbyState.orientation}
-          />
-        )}
-      /> */}
     </Router>
   );
 }
