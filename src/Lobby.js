@@ -37,6 +37,22 @@ const LoadContainer = styled.div`
   margin-top: 10px;
 `;
 
+const Version = styled.div`
+  font-size: 0.01em;
+  font-family: sans-serif;
+  /* font-style: italic; */
+  position: fixed;
+  right: 10px;
+  bottom: -7px;
+  color: white;
+  height: 23px;
+  background-color: black;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding: 0 10px;
+`;
+
 function Lobby({ quickPlayHandler, isLoading, onGoingGame }) {
   return (
     <React.Fragment>
@@ -54,6 +70,11 @@ function Lobby({ quickPlayHandler, isLoading, onGoingGame }) {
         ) : (
           "Quick Play"
         )}
+        <Version>
+          Copyrights {1900 + new Date().getYear()} Masterchess.de
+          {process.env.REACT_APP_VERSION &&
+            ` ,ver: ${process.env.REACT_APP_VERSION}`}
+        </Version>
       </StartButton>
     </React.Fragment>
   );
