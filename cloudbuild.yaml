@@ -30,5 +30,5 @@ steps:
         "$_ZONE",
         "--container-image=$_REGION/$PROJECT_ID/$_IMAGE_NAME:$TAG_NAME",
       ]
-env:
-  - "PORT=$_PORT"
+    env:
+      - "PORT=$_PORT"
