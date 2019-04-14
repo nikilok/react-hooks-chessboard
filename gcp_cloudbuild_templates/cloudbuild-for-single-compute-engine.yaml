@@ -1,5 +1,6 @@
-# Build process for deploying to GKE
-
+# Cloud build routine for a single compute engine vm
+# It covers, building the docker image, pushing it to registry, and deploying 
+# to a single compute engine vm
 steps:
   # Npm install
   - name: "gcr.io/cloud-builders/npm"
@@ -18,3 +19,19 @@ steps:
   # Push the docker image to the registry
   - name: "gcr.io/cloud-builders/docker"
     args: ["push", "$_REGION/$PROJECT_ID/$_IMAGE_NAME:$TAG_NAME"]
+
+  DEPLOY to Server
+  - name: "gcr.io/cloud-builders/gcloud"
+    args:
+      [
+        "beta",
+        "compute",
+        "instances",
+        "update-container",
+        "$_SERVER_INSTANCE_NAME",
+        "--zone",
+        "$_ZONE",
+        "--container-image=$_REGION/$PROJECT_ID/$_IMAGE_NAME:$TAG_NAME",
+      ]
+    env:
+      - "PORT=$_PORT"  
