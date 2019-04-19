@@ -18,3 +18,12 @@ steps:
   # Push the docker image to the registry
   - name: "gcr.io/cloud-builders/docker"
     args: ["push", "$_REGION/$PROJECT_ID/$_IMAGE_NAME:$TAG_NAME"]
+
+  # Perform rolling update to Kubernetes
+  - name: "gcr.io/cloud-builders/kubectl"
+    args: ["kubectl",
+    "set",
+    "image",
+    "deployment",
+    "$_IMAGE_NAME",
+    "$_IMAGE_NAME=$_IMAGE_NAME:$TAG_NAME"]

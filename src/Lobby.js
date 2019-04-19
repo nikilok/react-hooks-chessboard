@@ -21,7 +21,7 @@ const StartButton = styled.div`
   cursor: pointer;
   transition: 0.3s;
   &:hover {
-    color: #fafafa;
+    color: #e10000;
   }
 `;
 
@@ -78,12 +78,11 @@ function Lobby({ quickPlayHandler, isLoading, onGoingGame }) {
         ) : (
           "Quick Play"
         )}
-        <Version>
-          Copyright © {1900 + new Date().getYear()} Masterchess.de
-          {process.env.REACT_APP_VERSION &&
-            ` ,${process.env.REACT_APP_VERSION}`}
-        </Version>
       </StartButton>
+      <Version>
+        Copyright © {1900 + new Date().getYear()} Masterchess.de
+        {process.env.REACT_APP_VERSION && ` ,${process.env.REACT_APP_VERSION}`}
+      </Version>
     </React.Fragment>
   );
 }
