@@ -24,7 +24,7 @@ steps:
     args: ["set", 
     "image",
     "deployment/$_IMAGE_NAME",
-    "$_IMAGE_NAME=$_REGION/$PROJECT_ID/$_IMAGE_NAME:$TAG_NAME"]
+    "$_CONTAINER_NAME=$_REGION/$PROJECT_ID/$_IMAGE_NAME:$TAG_NAME"]
     env:
       - "CLOUDSDK_CONTAINER_CLUSTER=$_CLOUDSDK_CONTAINER_CLUSTER"
       - "CLOUDSDK_COMPUTE_ZONE=$_ZONE"
