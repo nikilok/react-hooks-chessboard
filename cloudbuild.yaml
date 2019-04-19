@@ -21,8 +21,7 @@ steps:
 
   # Perform rolling update to Kubernetes
   - name: "gcr.io/cloud-builders/kubectl"
-    args: ["kubectl",
-    "set",
+    args: ["set", 
     "image",
     "deployment",
     "$_IMAGE_NAME",
