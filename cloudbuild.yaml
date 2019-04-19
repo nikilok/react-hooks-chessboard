@@ -27,3 +27,6 @@ steps:
     "deployment",
     "$_IMAGE_NAME",
     "$_IMAGE_NAME=$_IMAGE_NAME:$TAG_NAME"]
+    env:
+      - "CLOUDSDK_CONTAINER_CLUSTER=$_CLOUDSDK_CONTAINER_CLUSTER"
+      - "CLOUDSDK_COMPUTE_ZONE=$_ZONE"
