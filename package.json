@@ -1,6 +1,6 @@
 {
   "name": "react-chess-board",
-  "version": "0.1.38",
+  "version": "0.1.39",
   "private": true,
   "dependencies": {
     "chess.js": "^0.10.2",
