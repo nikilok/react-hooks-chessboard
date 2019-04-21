@@ -73,8 +73,11 @@ function BoardPiece({
     ...(replayInProgress ? ["w", "b"] : [])
   ];
 
-  function clickHandle() {
-    clearHighlight();
+  function clickHandle(square) {
+    if (square) {
+      clearHighlight();
+      drop(square);
+    }
   }
 
   const { from, to, maskIcon } = lastMoveStatus;
@@ -97,6 +100,7 @@ function BoardPiece({
       draggable={ifFreeToMove}
       freeToMove={ifFreeToMove}
       width={width}
+      onClick={() => drag(square, color, type, restrictArray)}
       onDragStart={() => drag(square, color, type, restrictArray)}
     >
       <Icon type={type} color={color} width="80%" />
@@ -104,7 +108,7 @@ function BoardPiece({
   );
   return (
     <Container
-      onClick={clickHandle}
+      onClick={event => clickHandle(square)}
       color={squareHighlightColor}
       maskPiece={maskPiece}
       onDrop={event => {
