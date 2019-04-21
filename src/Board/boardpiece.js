@@ -73,10 +73,11 @@ function BoardPiece({
     ...(replayInProgress ? ["w", "b"] : [])
   ];
 
-  function clickHandle(square) {
+  function clickHandle(square, event) {
+    event.preventDefault();
     if (square) {
-      clearHighlight();
       drop(square);
+      clearHighlight();
     }
   }
 
@@ -108,7 +109,7 @@ function BoardPiece({
   );
   return (
     <Container
-      onClick={event => clickHandle(square)}
+      onClick={event => clickHandle(square, event)}
       color={squareHighlightColor}
       maskPiece={maskPiece}
       onDrop={event => {

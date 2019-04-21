@@ -106,7 +106,14 @@ function Game({ gameID, orientation, history, fen, leaveGameHandler }) {
    * @param {*} type
    */
   function dragStart(square, color, type, restrict, event) {
-    event.stopPropagation();
+    // Stop event bubbling when one of the below conditions satisfies,
+    // to allow click capturing a piece.
+    if (
+      moveDrag.color === "" ||
+      !(moveDrag.color !== "" && moveDrag.color !== color)
+    ) {
+      event.stopPropagation();
+    }
     if (!restrict.includes(color)) {
       dispatch({ type: types.DRAGSTART, square });
       setMoveDrag({ start: square, color, type });
