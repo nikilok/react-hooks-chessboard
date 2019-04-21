@@ -13,7 +13,7 @@ const GlobalStyles = createGlobalStyle`
     -moz-osx-font-smoothing: grayscale;
 }
 html {
-    background-color: black;
+    background-color: #CDCEBE;
 }
 @font-face {
     font-family: Big Noodle Too,impact,sans-serif;
