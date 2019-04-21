@@ -1,7 +1,7 @@
 import React from "react";
 import styled, { createGlobalStyle } from "styled-components";
-import backdrop from "./icons/backdrop.jpg";
-import logo from "./icons/logo.png";
+import backdrop from "./icons/backdrop1.jpg";
+import logo from "./icons/logo-black.png";
 import Load from "./Loader";
 
 const Background = createGlobalStyle`
@@ -17,7 +17,7 @@ const Background = createGlobalStyle`
 const StartButton = styled.div`
   margin-top: 100px;
   font-size: 3.5em;
-  color: white;
+  color: black;
   cursor: pointer;
   transition: 0.3s;
   ${props =>
@@ -48,9 +48,9 @@ const Version = styled.div`
   position: fixed;
   right: 10px;
   bottom: -7px;
-  color: white;
+  color: black;
   height: 23px;
-  background-color: rgba(0, 0, 0, 0.5);
+  /* background-color: rgba(0, 0, 0, 0.5); */
   display: flex;
   align-items: flex-end;
   justify-content: center;

@@ -85,7 +85,7 @@ const hexa = keyframes`
 
 const Hexas = styled.g`
   path {
-    fill: white;
+    fill: black;
   }
 
   & path:nth-child(1) {
@@ -129,7 +129,7 @@ const SLOW = styled.circle`
 `;
 
 const FAST = styled.circle`
-  stroke: white;
+  stroke: black;
   animation: ${fastdash} 3s linear infinite, ${rotate} 3s linear infinite;
   transform-origin: 50% 50%;
 `;
