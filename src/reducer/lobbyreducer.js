@@ -17,6 +17,9 @@ function lobbyReducer(state, action) {
     case types.RESUME_UPDATE:
       return { ...state, onGoingGame: action.status };
     case types.QUICK_PLAY:
+      action.dispatch({
+        type: types.SEARCHING
+      });
       getFingerprint().then(fingerprint => {
         socket.emit("subscribe", fingerprint);
         socket.emit("getGameKey", fingerprint);
@@ -40,10 +43,6 @@ function lobbyReducer(state, action) {
                 history,
                 fen,
                 clientKey
-              });
-            } else {
-              action.dispatch({
-                type: types.SEARCHING
               });
             }
           });
