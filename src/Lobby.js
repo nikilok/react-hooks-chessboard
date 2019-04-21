@@ -20,9 +20,11 @@ const StartButton = styled.div`
   color: white;
   cursor: pointer;
   transition: 0.3s;
-  &:hover {
+  ${props =>
+    !props.isLoading &&
+    `&:hover {
     color: #e10000;
-  }
+  }`}
 `;
 
 const Search = styled.div`
@@ -65,7 +67,7 @@ function Lobby({ quickPlayHandler, isLoading, onGoingGame }) {
     <React.Fragment>
       <Background />
       <Icon src={logo} alt="Masterchess.de" />
-      <StartButton onClick={quickPlayHandler}>
+      <StartButton onClick={quickPlayHandler} isLoading={isLoading}>
         {isLoading ? (
           <Search>
             <SearchLabel>Searching</SearchLabel>
