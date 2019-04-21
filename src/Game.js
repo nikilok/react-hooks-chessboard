@@ -105,7 +105,8 @@ function Game({ gameID, orientation, history, fen, leaveGameHandler }) {
    * @param {*} color
    * @param {*} type
    */
-  function dragStart(square, color, type, restrict) {
+  function dragStart(square, color, type, restrict, event) {
+    event.stopPropagation();
     if (!restrict.includes(color)) {
       dispatch({ type: types.DRAGSTART, square });
       setMoveDrag({ start: square, color, type });

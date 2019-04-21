@@ -87,7 +87,7 @@ function BoardPiece({
     if (from === square) {
       squareHighlightColor = COLORS.MOVEFROM;
       if (maskIcon) {
-        squareHighlightColor = undefined;
+        squareHighlightColor = COLORS.MOVEFROM;
         maskPiece = true;
       }
     } else if (to === square) {
@@ -100,8 +100,8 @@ function BoardPiece({
       draggable={ifFreeToMove}
       freeToMove={ifFreeToMove}
       width={width}
-      onClick={() => drag(square, color, type, restrictArray)}
-      onDragStart={() => drag(square, color, type, restrictArray)}
+      onClick={event => drag(square, color, type, restrictArray, event)}
+      onDragStart={event => drag(square, color, type, restrictArray, event)}
     >
       <Icon type={type} color={color} width="80%" />
     </IconContainer>
