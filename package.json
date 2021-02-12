@@ -3,18 +3,18 @@
   "version": "0.2.8",
   "private": true,
   "dependencies": {
-    "chess.js": "^0.10.2",
+    "chess.js": "^0.11.0",
     "compression": "^1.7.4",
-    "express": "^4.16.4",
-    "fingerprintjs2": "^2.0.6",
+    "express": "^4.17.1",
+    "fingerprintjs2": "^2.1.2",
     "path": "^0.12.7",
-    "react": "^16.8.6",
-    "react-dom": "^16.8.6",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
     "react-notifications-component": "^1.1.1",
-    "react-router-dom": "^5.0.0",
-    "react-scripts": "^2.1.8",
+    "react-router-dom": "^5.2.0",
+    "react-scripts": "^4.0.2",
     "socket.io-client": "^2.2.0",
-    "styled-components": "^4.2.0"
+    "styled-components": "^5.2.1"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -29,6 +29,7 @@
     "not op_mini all"
   ],
   "devDependencies": {
-    "babel-plugin-styled-components": "^1.10.0"
+    "babel-plugin-styled-components": "^1.12.0",
+    "yarn-upgrade-all": "^0.5.4"
   }
 }
