@@ -1,6 +1,6 @@
 import io from "socket.io-client";
-import { serviceUrl } from "../config.json";
+import * as url from "../config.json"
 
 /* Initalize the Web Socket connection to the game server */
-const socket = io(serviceUrl);
+const socket = io(url.serviceUrl);
 export default socket;

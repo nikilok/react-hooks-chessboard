@@ -1,14 +1,14 @@
 import * as types from "./constants";
 import * as CONSTANT from "../common/appConstant";
 import socket from "../common/socket";
-import { serviceUrl } from "../config.json";
+import * as url from "../config.json"
 import { getFingerprint } from "../common/chess-utilities";
 
 function lobbyReducer(state, action) {
   switch (action.type) {
     case types.CHECK_RESUME_GAME:
       getFingerprint().then(fingerprint => {
-        fetch(`${serviceUrl}/gamestatus/${fingerprint}`)
+        fetch(`${url.serviceUrl}/gamestatus/${fingerprint}`)
           .then(response => response.json())
           .then(({ status }) => {
             action.dispatch({ type: types.RESUME_UPDATE, status });

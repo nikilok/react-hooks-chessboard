@@ -4,8 +4,8 @@ import lobbyReducer from "./reducer/lobbyreducer";
 import * as types from "./reducer/constants";
 import NotificationContext from "./context/NotificationContext";
 
-import Game from "./Game";
-import Lobby from "./Lobby";
+import Game from "./Game.jsx";
+import Lobby from "./Lobby.jsx";
 
 function App() {
   const [lobbyState, dispatch] = useReducer(lobbyReducer, {
@@ -41,19 +41,11 @@ function App() {
   }
 
   return (
-    <Router>
-      <Route
-        exact={true}
-        path="/*"
-        render={() => (
           <Lobby
             quickPlayHandler={quickPlay}
             isLoading={lobbyState.isLoading}
             onGoingGame={lobbyState.onGoingGame}
           />
-        )}
-      />
-    </Router>
   );
 }
 

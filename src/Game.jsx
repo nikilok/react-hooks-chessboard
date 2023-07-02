@@ -6,7 +6,7 @@ import chessReducer from "./reducer/chessreducer";
 import * as types from "./reducer/constants";
 import styled from "styled-components";
 import Board from "./Board";
-import Promotion from "./Board/promotion";
+import Promotion from "./Board/promotion.jsx";
 import Modal from "./Modal";
 import GameInfo from "./GameInfo";
 import { isPromotion } from "./common/chess-utilities";

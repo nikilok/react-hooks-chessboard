@@ -83,7 +83,6 @@ function Lobby({ quickPlayHandler, isLoading, onGoingGame }) {
       </StartButton>
       <Version>
         Copyright © {1900 + new Date().getYear()} Masterchess.de
-        {process.env.REACT_APP_VERSION && ` ,${process.env.REACT_APP_VERSION}`}
       </Version>
     </React.Fragment>
   );
