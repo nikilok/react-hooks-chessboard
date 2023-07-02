@@ -1,28 +1,28 @@
-import React, { useEffect, useReducer, useState, useRef } from "react";
-import { COLORS } from "./common/modern-theme";
-import useBoardSize from "./common/boardSizeHook";
-import ChessContext from "./context/ChessContext";
-import chessReducer from "./reducer/chessreducer";
-import * as types from "./reducer/constants";
-import styled from "styled-components";
-import Board from "./Board";
-import Promotion from "./Board/promotion.jsx";
-import Modal from "./Modal";
-import GameInfo from "./GameInfo";
-import { isPromotion } from "./common/chess-utilities";
-import socket from "./common/socket";
-import downArrowImg from "./icons/down-arrow.png";
+import { useEffect, useReducer, useState, useRef } from 'react'
+import { COLORS } from './common/modern-theme'
+import useBoardSize from './common/boardSizeHook'
+import ChessContext from './context/ChessContext'
+import chessReducer from './reducer/chessreducer'
+import * as types from './reducer/constants'
+import styled from 'styled-components'
+import Board from './Board'
+import Promotion from './Board/promotion.jsx'
+import Modal from './Modal'
+import GameInfo from './GameInfo'
+import { isPromotion } from './common/chess-utilities'
+import socket from './common/socket'
+import downArrowImg from './icons/down-arrow.png'
 
 const Container = styled.div`
   text-align: center;
   background-color: white;
   display: grid;
   grid-template-areas:
-    "boardarea"
-    "infoarea";
+    'boardarea'
+    'infoarea';
   flex-direction: column;
   align-items: flex-start;
-`;
+`
 
 const TableBackground = styled.div`
   grid-area: boardarea;
@@ -32,7 +32,7 @@ const TableBackground = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-`;
+`
 
 const GameInfoArea = styled.div`
   grid-area: infoarea;
@@ -43,7 +43,7 @@ const GameInfoArea = styled.div`
   margin: auto;
   padding: 10px 95px 10px 95px;
   background-color: white;
-`;
+`
 
 const DownArrow = styled.img`
   filter: grayscale(100);
@@ -58,7 +58,7 @@ const DownArrow = styled.img`
     opacity: 1;
     filter: grayscale(0);
   }
-`;
+`
 /**
  * The Game component handles everything about the game experience.
  * It has the chess board, and all other UI elements required for the game experience.
@@ -67,17 +67,17 @@ const DownArrow = styled.img`
 function Game({ gameID, orientation, history, fen, leaveGameHandler }) {
   const [state, dispatch] = useReducer(chessReducer, {
     chess: { turn: () => {} },
-    board: []
-  });
-  const [showPromotionUI, setShowPromotionUI] = useState(false);
+    board: [],
+  })
+  const [showPromotionUI, setShowPromotionUI] = useState(false)
   const [moveDrag, setMoveDrag] = useState({
-    start: "",
-    to: "",
-    color: "",
-    type: ""
-  });
-  const boardWidth = useBoardSize(97);
-  const gameInfoRef = useRef(null);
+    start: '',
+    to: '',
+    color: '',
+    type: '',
+  })
+  const boardWidth = useBoardSize(97)
+  const gameInfoRef = useRef(null)
 
   useEffect(() => {
     dispatch({
@@ -86,15 +86,15 @@ function Game({ gameID, orientation, history, fen, leaveGameHandler }) {
       orientation,
       gameID,
       fen,
-      history
-    });
+      history,
+    })
 
     return () => {
       /* Component unmount cleanup events */
-      socket.removeAllListeners();
-      dispatch({ type: types.RESET_GAME_REDUCER });
-    };
-  }, [gameID]);
+      socket.removeAllListeners()
+      dispatch({ type: types.RESET_GAME_REDUCER })
+    }
+  }, [gameID])
 
   /**
    * The Fn is called when the user starts to drag a chess piece.
@@ -109,14 +109,14 @@ function Game({ gameID, orientation, history, fen, leaveGameHandler }) {
     // Stop event bubbling when one of the below conditions satisfies,
     // to allow click capturing a piece.
     if (
-      moveDrag.color === "" ||
-      !(moveDrag.color !== "" && moveDrag.color !== color)
+      moveDrag.color === '' ||
+      !(moveDrag.color !== '' && moveDrag.color !== color)
     ) {
-      event.stopPropagation();
+      event.stopPropagation()
     }
     if (!restrict.includes(color)) {
-      dispatch({ type: types.DRAGSTART, square });
-      setMoveDrag({ start: square, color, type });
+      dispatch({ type: types.DRAGSTART, square })
+      setMoveDrag({ start: square, color, type })
     }
   }
 
@@ -127,28 +127,28 @@ function Game({ gameID, orientation, history, fen, leaveGameHandler }) {
    * @param {*} square
    */
   function drop(square) {
-    const { start, color, type } = moveDrag;
-    const rowNumber = square.split("")[1];
+    const { start, color, type } = moveDrag
+    const rowNumber = square.split('')[1]
 
     if (!isPromotion(rowNumber, color, type, start, square, state.chess)) {
       dispatch({
         type: types.MOVE,
         from: start,
         to: square,
-        leaveGameHandler: leaveGameHandler
-      });
+        leaveGameHandler: leaveGameHandler,
+      })
     } else {
-      setMoveDrag({ ...moveDrag, to: square });
-      setShowPromotionUI(true);
+      setMoveDrag({ ...moveDrag, to: square })
+      setShowPromotionUI(true)
     }
   }
 
   function clearHighlight() {
-    dispatch({ type: types.CLEARHIGHLIGHT });
+    dispatch({ type: types.CLEARHIGHLIGHT })
   }
 
   function scrollDown() {
-    gameInfoRef.current.scrollIntoView();
+    gameInfoRef.current.scrollIntoView()
   }
 
   /**
@@ -158,15 +158,15 @@ function Game({ gameID, orientation, history, fen, leaveGameHandler }) {
    * @param {*} promotedPiece
    */
   function promotionHandler(promotedPiece) {
-    const { start, to } = moveDrag;
+    const { start, to } = moveDrag
     dispatch({
       type: types.MOVE,
       from: start,
       to,
       promotion: promotedPiece,
-      leaveGameHandler: leaveGameHandler
-    });
-    setShowPromotionUI(false);
+      leaveGameHandler: leaveGameHandler,
+    })
+    setShowPromotionUI(false)
   }
 
   return (
@@ -175,7 +175,7 @@ function Game({ gameID, orientation, history, fen, leaveGameHandler }) {
         dragStart,
         drop,
         clearHighlight,
-        replayInProgress: state.replayInProgress
+        replayInProgress: state.replayInProgress,
       }}
     >
       <Container>
@@ -185,7 +185,7 @@ function Game({ gameID, orientation, history, fen, leaveGameHandler }) {
             config={{
               showSquareLetters: true,
               orientation: state.orientation,
-              showMoveHighlights: true
+              showMoveHighlights: true,
             }}
             position={state.board}
             lastMoveStatus={state.lastMoveStatus}
@@ -217,7 +217,7 @@ function Game({ gameID, orientation, history, fen, leaveGameHandler }) {
         />
       </GameInfoArea>
     </ChessContext.Provider>
-  );
+  )
 }
 
-export default Game;
+export default Game

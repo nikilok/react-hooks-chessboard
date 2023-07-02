@@ -1,5 +1,5 @@
-import * as types from "../reducer/constants";
-import FingerprintJS from "@fingerprintjs/fingerprintjs"
+import * as types from '../reducer/constants'
+import FingerprintJS from '@fingerprintjs/fingerprintjs'
 
 /**
  * Fn that figures out if a White or Black pawn has trigerred a promotion.
@@ -14,14 +14,14 @@ import FingerprintJS from "@fingerprintjs/fingerprintjs"
  */
 function isPromotion(rowNumber, color, type, from, to, chessInstance) {
   if (
-    (rowNumber === "8" && color === "w" && type === "p") ||
-    (rowNumber === "1" && color === "b" && type === "p")
+    (rowNumber === '8' && color === 'w' && type === 'p') ||
+    (rowNumber === '1' && color === 'b' && type === 'p')
   ) {
     if (isMoveValid(from, to, chessInstance)) {
-      return true;
+      return true
     }
   }
-  return false;
+  return false
 }
 
 /**
@@ -33,9 +33,9 @@ function isPromotion(rowNumber, color, type, from, to, chessInstance) {
 function getValidMoves(from, chessInstance) {
   const validMovesVerbose = chessInstance.moves({
     square: from,
-    verbose: true
-  });
-  return Array.from(new Set(validMovesVerbose.map(({ to }) => to)));
+    verbose: true,
+  })
+  return Array.from(new Set(validMovesVerbose.map(({ to }) => to)))
 }
 
 /**
@@ -47,7 +47,7 @@ function getValidMoves(from, chessInstance) {
  * @returns
  */
 function isMoveValid(from, to, chessInstance) {
-  return getValidMoves(from, chessInstance).includes(to);
+  return getValidMoves(from, chessInstance).includes(to)
 }
 
 /**
@@ -65,12 +65,12 @@ function replay(
   orientation,
   promotion = null
 ) {
-  dispatch({ type: types.REPLAY, inProgress: true });
-  recursiveReplay(moves, timeout);
+  dispatch({ type: types.REPLAY, inProgress: true })
+  recursiveReplay(moves, timeout)
 
   function recursiveReplay(moves, timeout) {
-    const [from, to] = moves.shift();
-    const animationDelay = 600;
+    const [from, to] = moves.shift()
+    const animationDelay = 600
     setTimeout(() => {
       dispatch({
         type: types.ANIMATEMOVE,
@@ -78,8 +78,8 @@ function replay(
         to,
         boardWidth,
         orientation,
-        animationDelay
-      });
+        animationDelay,
+      })
       setTimeout(() => {
         dispatch({
           type: types.MOVE,
@@ -87,15 +87,15 @@ function replay(
           to,
           sendToServer: false,
           promotion,
-          leaveGameHandler: () => {}
-        });
+          leaveGameHandler: () => {},
+        })
         if (moves.length > 0) {
-          recursiveReplay(moves, timeout);
+          recursiveReplay(moves, timeout)
         } else {
-          dispatch({ type: types.REPLAY, inProgress: false });
+          dispatch({ type: types.REPLAY, inProgress: false })
         }
-      }, animationDelay); // Time period for completing the transition animation of the chess piece
-    }, timeout);
+      }, animationDelay) // Time period for completing the transition animation of the chess piece
+    }, timeout)
   }
 }
 
@@ -104,16 +104,16 @@ function replay(
  */
 async function getFingerprint() {
   // Initialize an agent at application startup.
-  const fpPromise = FingerprintJS.load();
+  const fpPromise = FingerprintJS.load()
 
   // Get the visitor identifier when you need it.
-  const fp = await fpPromise;
-  const result = await fp.get();
-  return result.visitorId;
+  const fp = await fpPromise
+  const result = await fp.get()
+  return result.visitorId
 }
 
 function getOppositeColor(color) {
-  return color === "w" ? "b" : "w";
+  return color === 'w' ? 'b' : 'w'
 }
 export {
   isPromotion,
@@ -121,5 +121,5 @@ export {
   isMoveValid,
   replay,
   getFingerprint,
-  getOppositeColor
-};
+  getOppositeColor,
+}

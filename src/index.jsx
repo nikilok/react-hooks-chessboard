@@ -1,14 +1,14 @@
-import React from 'react'
 import ReactDOM from 'react-dom/client'
-import Notification from "./Notification";
-import App from "./App";
-import GlobalStyle from "./common/globalStyles";
+import { ReactNotifications } from 'react-notifications-component'
+import 'react-notifications-component/dist/theme.css'
+import App from './App.jsx'
+import GlobalStyle from './common/globalStyles'
+import { StrictMode } from 'react'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-  <React.StrictMode>
+  <StrictMode>
     <GlobalStyle />
-    <Notification>
-      <App />
-    </Notification>
-  </React.StrictMode>,
+    <ReactNotifications />
+    <App />
+  </StrictMode>
 )

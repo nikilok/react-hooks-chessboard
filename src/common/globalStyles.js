@@ -1,4 +1,4 @@
-import { createGlobalStyle } from "styled-components";
+import { createGlobalStyle } from 'styled-components'
 
 const GlobalStyles = createGlobalStyle`
     body {
@@ -25,6 +25,6 @@ html {
     font-size: 31px;
     src: url(./fonts/bignoodletoo.woff) format("woff");
 }
-`;
+`
 
-export default GlobalStyles;
+export default GlobalStyles

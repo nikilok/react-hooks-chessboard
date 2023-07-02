@@ -1,8 +1,8 @@
-import React from "react";
-import styled, { createGlobalStyle } from "styled-components";
-import backdrop from "./icons/backdrop1.jpg";
-import logo from "./icons/logo-black.png";
-import Load from "./Loader";
+import React from 'react'
+import styled, { createGlobalStyle } from 'styled-components'
+import backdrop from './icons/backdrop1.jpg'
+import logo from './icons/logo-black.png'
+import Load from './Loader'
 
 const Background = createGlobalStyle`
  html {
@@ -13,34 +13,34 @@ const Background = createGlobalStyle`
     align-items: top;
     padding: 50px;
  }
-`;
+`
 const StartButton = styled.div`
   margin-top: 100px;
   font-size: 3.5em;
   color: black;
   cursor: pointer;
   transition: 0.3s;
-  ${props =>
+  ${(props) =>
     !props.isLoading &&
     `&:hover {
     color: #e10000;
   }`}
-`;
+`
 
 const Search = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-`;
+`
 
 const SearchLabel = styled.div`
   margin-right: 20px;
-`;
+`
 
 const LoadContainer = styled.div`
   margin-top: 10px;
   position: relative;
-`;
+`
 
 const Version = styled.div`
   font-size: 10px;
@@ -55,12 +55,12 @@ const Version = styled.div`
   align-items: flex-end;
   justify-content: center;
   padding: 0 5px;
-`;
+`
 
 const Icon = styled.img`
   height: 117px;
   width: 200px;
-`;
+`
 
 function Lobby({ quickPlayHandler, isLoading, onGoingGame }) {
   return (
@@ -76,15 +76,15 @@ function Lobby({ quickPlayHandler, isLoading, onGoingGame }) {
             </LoadContainer>
           </Search>
         ) : onGoingGame ? (
-          "Rejoin"
+          'Rejoin'
         ) : (
-          "Quick Play"
+          'Quick Play'
         )}
       </StartButton>
       <Version>
         Copyright © {1900 + new Date().getYear()} Masterchess.de
       </Version>
     </React.Fragment>
-  );
+  )
 }
-export default Lobby;
+export default Lobby
