@@ -1,5 +1,4 @@
-import React from "react";
-import styled, { keyframes } from "styled-components";
+import styled, { keyframes } from 'styled-components'
 
 const LoaderContainer = styled.div`
   position: absolute;
@@ -9,21 +8,21 @@ const LoaderContainer = styled.div`
   &:before {
     display: inline-block;
     vertical-align: middle;
-    content: " ";
+    content: ' ';
     height: 100%;
   }
-`;
+`
 
 const Loader = styled.div`
   display: inline-block;
   vertical-align: middle;
-  width: ${props => props.width};
-  height: ${props => props.height};
+  width: ${(props) => props.width};
+  height: ${(props) => props.height};
   & svg {
     width: 100%;
     height: 100%;
   }
-`;
+`
 
 const slowdash = keyframes`
     0%,
@@ -35,7 +34,7 @@ const slowdash = keyframes`
       stroke-dasharray: 200, 2500;
       stroke-dashoffset: -100;
     }
-`;
+`
 
 const rotate = keyframes`
     0% {
@@ -47,7 +46,7 @@ const rotate = keyframes`
     100% {
       transform: rotate(315deg);
     }
-`;
+`
 
 const fastdash = keyframes`
   0% {
@@ -65,7 +64,7 @@ const fastdash = keyframes`
       stroke-dasharray: 2500, 2500;
       stroke-dashoffset: -2500;
     }
-  `;
+  `
 
 const hexa = keyframes`
     0% {
@@ -81,7 +80,7 @@ const hexa = keyframes`
       transform: scale(1);
       opacity: 1;
     }
-`;
+`
 
 const Hexas = styled.g`
   path {
@@ -116,25 +115,25 @@ const Hexas = styled.g`
     animation: ${hexa} 3s 1.28571s infinite;
     transform-origin: 50% 50%;
   }
-`;
+`
 
 const BG = styled.circle`
   stroke: #e3e4dc;
-`;
+`
 
 const SLOW = styled.circle`
   stroke: #98938f;
   animation: ${slowdash} 3s linear infinite, ${rotate} 3s linear infinite;
   transform-origin: 50% 50%;
-`;
+`
 
 const FAST = styled.circle`
   stroke: black;
   animation: ${fastdash} 3s linear infinite, ${rotate} 3s linear infinite;
   transform-origin: 50% 50%;
-`;
+`
 
-function Load({ width, height, color }) {
+function Load({ width, height }) {
   return (
     <LoaderContainer>
       <Loader width={width} height={height}>
@@ -191,7 +190,7 @@ function Load({ width, height, color }) {
         </svg>
       </Loader>
     </LoaderContainer>
-  );
+  )
 }
 
-export default Load;
+export default Load

@@ -1,15 +1,15 @@
-import React, { useContext } from "react";
-import { COLORS } from "../common/modern-theme";
-import styled, { css } from "styled-components";
-import ChessContext from "../context/ChessContext";
-import Icon from "./icon";
+import { useContext } from 'react'
+import { COLORS } from '../common/modern-theme'
+import styled, { css } from 'styled-components'
+import ChessContext from '../context/ChessContext'
+import Icon from './icon'
 
 const Container = styled.div`
-  width: ${props => `${props.width}px`};
-  height: ${props => `${props.width}px`};
-  background-color: ${props => props.color};
+  width: ${(props) => `${props.width}px`};
+  height: ${(props) => `${props.width}px`};
+  background-color: ${(props) => props.color};
 
-  ${props =>
+  ${(props) =>
     props.maskPiece &&
     css`
       ${IconContainer} {
@@ -17,7 +17,7 @@ const Container = styled.div`
         opacity: 0.4;
       }
     `}
-`;
+`
 
 const IconContainer = styled.div`
   transition: all 0.3s;
@@ -26,14 +26,14 @@ const IconContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: ${props => `${props.width}px`};
-  height: ${props => `${props.width}px`};
-  cursor: ${props => (props.freeToMove ? "grab" : "no-drop")};
+  width: ${(props) => `${props.width}px`};
+  height: ${(props) => `${props.width}px`};
+  cursor: ${(props) => (props.freeToMove ? 'grab' : 'no-drop')};
 
   &:active {
-    cursor: ${props => props.freeToMove && "grabbing"};
+    cursor: ${(props) => props.freeToMove && 'grabbing'};
   }
-`;
+`
 
 /**
  * BoardPiece Component is responsible for rendering the Chess pieces,
@@ -54,74 +54,74 @@ function BoardPiece({
   square,
   type,
   color,
-  lastMoveStatus = { from: "", to: "" },
+  lastMoveStatus = { from: '', to: '' },
   showMoveHighlights,
   restrict,
   turn,
-  width
+  width,
 }) {
   const {
     dragStart: drag,
     drop,
     clearHighlight,
-    replayInProgress
-  } = useContext(ChessContext);
+    replayInProgress,
+  } = useContext(ChessContext)
 
   const restrictArray = [
     ...restrict,
-    turn() === "w" ? "b" : "w",
-    ...(replayInProgress ? ["w", "b"] : [])
-  ];
+    turn() === 'w' ? 'b' : 'w',
+    ...(replayInProgress ? ['w', 'b'] : []),
+  ]
 
   function clickHandle(square, event) {
-    event.preventDefault();
+    event.preventDefault()
     if (square) {
-      drop(square);
-      clearHighlight();
+      drop(square)
+      clearHighlight()
     }
   }
 
-  const { from, to, maskIcon } = lastMoveStatus;
+  const { from, to, maskIcon } = lastMoveStatus
 
-  let squareHighlightColor, maskPiece;
+  let squareHighlightColor, maskPiece
   if (showMoveHighlights || maskIcon) {
     if (from === square) {
-      squareHighlightColor = COLORS.MOVEFROM;
+      squareHighlightColor = COLORS.MOVEFROM
       if (maskIcon) {
-        squareHighlightColor = COLORS.MOVEFROM;
-        maskPiece = true;
+        squareHighlightColor = COLORS.MOVEFROM
+        maskPiece = true
       }
     } else if (to === square) {
-      squareHighlightColor = COLORS.MOVETO;
+      squareHighlightColor = COLORS.MOVETO
     }
   }
-  const ifFreeToMove = !restrictArray.includes(color);
+  const ifFreeToMove = !restrictArray.includes(color)
   const PieceContainer = type && (
     <IconContainer
       draggable={ifFreeToMove}
       freeToMove={ifFreeToMove}
       width={width}
-      onClick={event => drag(square, color, type, restrictArray, event)}
-      onDragStart={event => drag(square, color, type, restrictArray, event)}
+      onClick={(event) => drag(square, color, type, restrictArray, event)}
+      onDragStart={(event) => drag(square, color, type, restrictArray, event)}
     >
       <Icon type={type} color={color} width="80%" />
     </IconContainer>
-  );
+  )
   return (
     <Container
-      onClick={event => clickHandle(square, event)}
+      onClick={(event) => clickHandle(square, event)}
       color={squareHighlightColor}
       maskPiece={maskPiece}
-      onDrop={event => {
-        event.preventDefault();
-        drop(square);
+      onDrop={(event) => {
+        event.preventDefault()
+        drop(square)
       }}
-      onDragOver={event => event.preventDefault()}
+      onDragOver={(event) => event.preventDefault()}
       width={width}
     >
       {PieceContainer}
     </Container>
-  );
+  )
 }
 
-export default BoardPiece;
+export default BoardPiece

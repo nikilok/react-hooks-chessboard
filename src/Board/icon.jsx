@@ -1,19 +1,18 @@
-import React from "react";
-import styled from "styled-components";
-import * as ImageSet from "../icons/modern-dark";
-import isFireFox from "../common/browserDetect";
+import styled from 'styled-components'
+import * as ImageSet from '../icons/modern-dark'
+import isFireFox from '../common/browserDetect'
 
 const PieceAsBackgroundImg = styled.div`
-  width: ${props => props.width};
-  height: ${props => props.width};
+  width: ${(props) => props.width};
+  height: ${(props) => props.width};
   background-size: contain;
   background-repeat: no-repeat;
-`;
+`
 
 const PieceAsImg = styled.img`
-  width: ${props => props.width};
-  height: ${props => props.width};
-`;
+  width: ${(props) => props.width};
+  height: ${(props) => props.width};
+`
 
 /**
  * Icon Component renders a chess piece image, given the type, color and width
@@ -22,7 +21,7 @@ const PieceAsImg = styled.img`
  * @returns
  */
 function Icon({ type, color, width }) {
-  const imgSrc = type && getPieceImg(type, color);
+  const imgSrc = type && getPieceImg(type, color)
 
   /**
    * getPieceImg Fn returns back the Image given the type Notation and color
@@ -34,32 +33,32 @@ function Icon({ type, color, width }) {
    */
   function getPieceImg(type, color) {
     switch (color + type) {
-      case "wp":
-        return ImageSet.WhitePawn;
-      case "bp":
-        return ImageSet.BlackPawn;
-      case "bb":
-        return ImageSet.BlackBishop;
-      case "wb":
-        return ImageSet.WhiteBishop;
-      case "bk":
-        return ImageSet.BlackKing;
-      case "wk":
-        return ImageSet.WhiteKing;
-      case "bn":
-        return ImageSet.BlackKnight;
-      case "wn":
-        return ImageSet.WhiteKnight;
-      case "bq":
-        return ImageSet.BlackQueen;
-      case "wq":
-        return ImageSet.WhiteQueen;
-      case "wr":
-        return ImageSet.WhiteRook;
-      case "br":
-        return ImageSet.BlackRook;
+      case 'wp':
+        return ImageSet.WhitePawn
+      case 'bp':
+        return ImageSet.BlackPawn
+      case 'bb':
+        return ImageSet.BlackBishop
+      case 'wb':
+        return ImageSet.WhiteBishop
+      case 'bk':
+        return ImageSet.BlackKing
+      case 'wk':
+        return ImageSet.WhiteKing
+      case 'bn':
+        return ImageSet.BlackKnight
+      case 'wn':
+        return ImageSet.WhiteKnight
+      case 'bq':
+        return ImageSet.BlackQueen
+      case 'wq':
+        return ImageSet.WhiteQueen
+      case 'wr':
+        return ImageSet.WhiteRook
+      case 'br':
+        return ImageSet.BlackRook
       default:
-        return;
+        return
     }
   }
 
@@ -76,7 +75,7 @@ function Icon({ type, color, width }) {
       style={{ backgroundImage: `url(${imgSrc})` }}
       width={width}
     />
-  );
+  )
 }
 
-export default Icon;
+export default Icon

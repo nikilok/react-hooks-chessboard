@@ -1,36 +1,35 @@
-import React from "react";
-import styled from "styled-components";
-import Square from "./square";
-import BoardPiece from "./boardpiece";
-import Annotation from "./annotation";
-import AnimatePiece from "./animatepiece";
-import { COLORS } from "../common/modern-theme";
+import styled from 'styled-components'
+import Square from './square'
+import BoardPiece from './boardpiece'
+import Annotation from './annotation'
+import AnimatePiece from './animatepiece'
+import { COLORS } from '../common/modern-theme'
 
 const BoardContainer = styled.div`
   position: relative;
   user-select: none;
-`;
+`
 
 const ChessBoard = styled.div`
   display: grid;
-  grid-template-columns: repeat(8, ${props => props.width});
-  grid-template-rows: repeat(8, ${props => props.width});
+  grid-template-columns: repeat(8, ${(props) => props.width});
+  grid-template-rows: repeat(8, ${(props) => props.width});
   border: 4px solid ${COLORS.BOARDBORDER};
-`;
+`
 
 const BoardPiecesGrid = styled.div`
   position: absolute;
   top: 0;
   left: 0;
   display: grid;
-  grid-template-columns: repeat(8, ${props => props.width});
-  grid-template-rows: repeat(8, ${props => props.width});
+  grid-template-columns: repeat(8, ${(props) => props.width});
+  grid-template-rows: repeat(8, ${(props) => props.width});
   border: 4px solid transparent;
-`;
+`
 
 const SquareContainer = styled.div`
   position: relative;
-`;
+`
 /**
  * Board Component, renders a chess board.
  * position - takes in an array of moves representing the board.
@@ -60,12 +59,12 @@ function Board({
   restrict,
   config: {
     showSquareLetters = true,
-    orientation = "auto",
-    showMoveHighlights = true
-  }
+    orientation = 'auto',
+    showMoveHighlights = true,
+  },
 }) {
-  const squareWidth = width / 8;
-  const squareWidthPx = `${squareWidth}px`;
+  const squareWidth = width / 8
+  const squareWidthPx = `${squareWidth}px`
   // prettier-ignore
   const boardColorPattern = [
                             0, 1, 0, 1, 0, 1, 0, 1, 
@@ -87,23 +86,23 @@ function Board({
    * @returns
    */
   function getPosition(orientation) {
-    const reversedPosition = [...position].reverse();
+    const reversedPosition = [...position].reverse()
     switch (orientation) {
-      case "w":
-        return position;
-      case "b":
-        return reversedPosition;
-      case "auto":
-        return turn() === "w" ? position : reversedPosition;
+      case 'w':
+        return position
+      case 'b':
+        return reversedPosition
+      case 'auto':
+        return turn() === 'w' ? position : reversedPosition
       default:
-        return position;
+        return position
     }
   }
   return (
     <BoardContainer>
       <ChessBoard width={squareWidthPx}>
         {boardColorPattern.map((color, i) => {
-          return <Square key={i} backgroundColor={color} />;
+          return <Square key={i} backgroundColor={color} />
         })}
       </ChessBoard>
 
@@ -129,7 +128,7 @@ function Board({
                 width={squareWidth}
               />
             </SquareContainer>
-          );
+          )
         })}
       </BoardPiecesGrid>
 
@@ -137,7 +136,7 @@ function Board({
         <AnimatePiece animate={animatePiece} width={squareWidthPx} />
       )}
     </BoardContainer>
-  );
+  )
 }
 
-export default Board;
+export default Board

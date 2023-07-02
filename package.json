@@ -2,24 +2,29 @@
   "name": "react-chess-board",
   "version": "0.2.8",
   "private": true,
+  "lint-staged": {
+    "**/*": "prettier --write --ignore-unknown"
+  },
   "dependencies": {
+    "@fingerprintjs/fingerprintjs": "3.4.1",
     "chess.js": "^0.11.0",
     "compression": "^1.7.4",
     "express": "^4.17.1",
-    "@fingerprintjs/fingerprintjs": "3.4.1",
     "path": "0.12.7",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-notifications-component": "^1.1.1",
-    "react-router-dom": "6.14.1",
+    "react-notifications-component": "^4.0.1",
     "socket.io-client": "^2.2.0",
     "styled-components": "^5.2.1"
   },
   "scripts": {
     "dev": "vite",
     "build": "vite build",
+    "prettier:check": "npx prettier --check .",
+    "prettier:write": "npx prettier --write .",
     "lint": "eslint src --ext js,jsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "prepare": "husky install"
   },
   "devDependencies": {
     "@types/react": "^18.0.37",
@@ -29,6 +34,9 @@
     "eslint-plugin-react": "^7.32.2",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.3.4",
+    "husky": "^8.0.3",
+    "lint-staged": "^13.2.3",
+    "prettier": "2.8.8",
     "vite": "^4.3.9"
   }
 }

@@ -1,10 +1,9 @@
-import React from "react";
-import styled from "styled-components";
+import styled from 'styled-components'
 
 const Caption = styled.div`
   font-size: 1.5em;
   margin-bottom: 15px;
-`;
+`
 
 const PromotionMask = styled.div`
   position: fixed;
@@ -16,13 +15,13 @@ const PromotionMask = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-`;
+`
 
 const PromotionModal = styled.div`
   background-color: white;
   padding: 50px;
   border-radius: 10px;
-`;
+`
 
 /**
  * Modal Component helps with rendering a modal view on to the app.
@@ -39,7 +38,7 @@ function Modal({ title, children }) {
         {children}
       </PromotionModal>
     </PromotionMask>
-  );
+  )
 }
 
-export default Modal;
+export default Modal

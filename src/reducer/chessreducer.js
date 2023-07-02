@@ -1,7 +1,7 @@
-import { Chess } from "chess.js";
-import * as types from "./constants";
-import socket from "../common/socket";
-import { replay, getOppositeColor } from "../common/chess-utilities";
+import { Chess } from 'chess.js'
+import * as types from './constants'
+import socket from '../common/socket'
+import { replay, getOppositeColor } from '../common/chess-utilities'
 
 /**
  * The Chess Reducer Function that handles all the dispatched events
@@ -13,11 +13,11 @@ import { replay, getOppositeColor } from "../common/chess-utilities";
 function chessReducer(state, action) {
   switch (action.type) {
     case types.INIT_BOARD:
-      const chess = new Chess(action.fen);
-      const board = getBoard(chess);
+      const chess = new Chess(action.fen)
+      const board = getBoard(chess)
       const initialLastMove =
-        (action.history || []).length > 0 && getLastMoveStatus(action.history);
-      socket.on("move", function({ move, promotion }) {
+        (action.history || []).length > 0 && getLastMoveStatus(action.history)
+      socket.on('move', function ({ move, promotion }) {
         replay(
           move,
           0,
@@ -25,8 +25,8 @@ function chessReducer(state, action) {
           window.innerHeight - 97,
           action.orientation,
           promotion
-        );
-      });
+        )
+      })
 
       return {
         ...state,
@@ -35,24 +35,24 @@ function chessReducer(state, action) {
         gameID: action.gameID,
         orientation: action.orientation,
         restrict: getOppositeColor(action.orientation),
-        lastMoveStatus: initialLastMove
-      };
+        lastMoveStatus: initialLastMove,
+      }
 
     case types.MOVE:
       const lastMoveStatus =
         state.chess.move({
           from: action.from,
           to: action.to,
-          promotion: action.promotion
-        }) || undefined;
+          promotion: action.promotion,
+        }) || undefined
       if (action.sendToServer === undefined) {
         if (lastMoveStatus) {
-          socket.emit("move", {
+          socket.emit('move', {
             move: [[action.from, action.to]],
             fen: state.chess.fen(),
             promotion: action.promotion,
-            gameRoomID: state.gameID
-          });
+            gameRoomID: state.gameID,
+          })
         }
       }
       return {
@@ -62,13 +62,13 @@ function chessReducer(state, action) {
         isGameOver: state.chess.game_over(),
         gameOverReason: reasonForGameOver(state.chess, action.leaveGameHandler),
         history: state.chess.history(),
-        animatePiece: undefined
-      };
+        animatePiece: undefined,
+      }
 
     case types.ANIMATEMOVE:
-      const { from, to, boardWidth, orientation, animationDelay } = action;
-      const { type, color } = state.chess.get(from);
-      const squareWidth = boardWidth / 8;
+      const { from, to, boardWidth, orientation, animationDelay } = action
+      const { type, color } = state.chess.get(from)
+      const squareWidth = boardWidth / 8
       return {
         ...state,
         animatePiece: {
@@ -77,31 +77,31 @@ function chessReducer(state, action) {
           squareColor: state.chess.square_color(from),
           type,
           color,
-          animationDelay
-        }
-      };
+          animationDelay,
+        },
+      }
 
     case types.CLEARHIGHLIGHT:
       return {
         ...state,
-        lastMoveStatus: undefined
-      };
+        lastMoveStatus: undefined,
+      }
 
     case types.REPLAY:
-      return { ...state, replayInProgress: action.inProgress };
+      return { ...state, replayInProgress: action.inProgress }
 
     case types.DRAGSTART:
       return {
         ...state,
-        lastMoveStatus: { from: action.square, maskIcon: true }
-      };
+        lastMoveStatus: { from: action.square, maskIcon: true },
+      }
     case types.RESET_GAME_REDUCER:
       return {
         chess: { turn: () => {} },
-        board: []
-      };
+        board: [],
+      }
     default:
-      return state;
+      return state
   }
 }
 
@@ -116,8 +116,8 @@ function chessReducer(state, action) {
  * @returns {from ,to}
  */
 function getLastMoveStatus(history) {
-  const [from, to] = history.pop()[0];
-  return { from, to };
+  const [from, to] = history.pop()[0]
+  return { from, to }
 }
 
 /**
@@ -136,22 +136,22 @@ function getLastMoveStatus(history) {
 function getCoords(square, orientation, width, turn) {
   const colMappingW = { a: 0, b: 1, c: 2, d: 3, e: 4, f: 5, g: 6, h: 7 },
     colMappingB = { a: 7, b: 6, c: 5, d: 4, e: 3, f: 2, g: 1, h: 0 },
-    notationSplit = square.split(""),
+    notationSplit = square.split(''),
     rowValue = notationSplit[1],
-    colValue = notationSplit[0];
-  let x, y;
-  if (orientation === "auto") {
-    orientation = turn(square);
+    colValue = notationSplit[0]
+  let x, y
+  if (orientation === 'auto') {
+    orientation = turn(square)
   }
 
-  if (orientation === "w") {
-    x = colMappingW[colValue] * width;
-    y = Math.abs(rowValue - 8) * width;
-  } else if (orientation === "b") {
-    x = colMappingB[colValue] * width;
-    y = (rowValue - 1) * width;
+  if (orientation === 'w') {
+    x = colMappingW[colValue] * width
+    y = Math.abs(rowValue - 8) * width
+  } else if (orientation === 'b') {
+    x = colMappingB[colValue] * width
+    y = (rowValue - 1) * width
   }
-  return { x, y };
+  return { x, y }
 }
 
 /**
@@ -164,18 +164,18 @@ function getCoords(square, orientation, width, turn) {
  * @returns {type: 'PieceNotation', color: 'b | w', square: 'squareNotation'}
  */
 function getBoard(chessObj) {
-  return chessObj.SQUARES.map(square => {
+  return chessObj.SQUARES.map((square) => {
     return {
       ...(chessObj.get(square) || { type: null, color: null }),
-      square
-    };
-  });
+      square,
+    }
+  })
 }
 
 function delayLeaveGame(time, leaveGameHandler) {
   setTimeout(() => {
-    leaveGameHandler();
-  }, time);
+    leaveGameHandler()
+  }, time)
 }
 
 /**
@@ -185,23 +185,23 @@ function delayLeaveGame(time, leaveGameHandler) {
  * @returns
  */
 function reasonForGameOver(chessObj, leaveGameHandler) {
-  const time = 5000;
+  const time = 5000
   if (chessObj.in_checkmate()) {
-    delayLeaveGame(time, leaveGameHandler);
-    return "Check Mate";
+    delayLeaveGame(time, leaveGameHandler)
+    return 'Check Mate'
   } else if (chessObj.in_threefold_repetition()) {
-    delayLeaveGame(time, leaveGameHandler);
-    return "Three Fold Repetition";
+    delayLeaveGame(time, leaveGameHandler)
+    return 'Three Fold Repetition'
   } else if (chessObj.in_draw()) {
-    delayLeaveGame(time, leaveGameHandler);
-    return "Draw";
+    delayLeaveGame(time, leaveGameHandler)
+    return 'Draw'
   } else if (chessObj.in_stalemate()) {
-    delayLeaveGame(time, leaveGameHandler);
-    return "Stale Mate";
+    delayLeaveGame(time, leaveGameHandler)
+    return 'Stale Mate'
   } else if (chessObj.insufficient_material()) {
-    delayLeaveGame(time, leaveGameHandler);
-    return "Insufficent Material Draw";
+    delayLeaveGame(time, leaveGameHandler)
+    return 'Insufficent Material Draw'
   }
 }
 
-export default chessReducer;
+export default chessReducer
