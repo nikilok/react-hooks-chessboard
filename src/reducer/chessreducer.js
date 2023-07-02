@@ -1,4 +1,4 @@
-import Chess from "chess.js";
+import { Chess } from "chess.js";
 import * as types from "./constants";
 import socket from "../common/socket";
 import { replay, getOppositeColor } from "../common/chess-utilities";

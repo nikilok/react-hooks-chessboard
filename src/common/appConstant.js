@@ -13,7 +13,7 @@ const GAME_LEAVE_MSG =
   PLAYER_RECONNECTED_MESSAGE =
     "The other player is back, the game will not be cancelled.";
 
-module.exports = {
+export {
   GAME_LEAVE_MSG,
   GAME_LEAVE_TITLE,
   GAME_TERMINATE_MSG,

@@ -1,5 +1,5 @@
 import * as types from "../reducer/constants";
-import Fingerprint2 from "fingerprintjs2";
+import FingerprintJS from "@fingerprintjs/fingerprintjs"
 
 /**
  * Fn that figures out if a White or Black pawn has trigerred a promotion.
@@ -102,29 +102,14 @@ function replay(
 /**
  * Generates a unique browser key.
  */
-function getFingerprint() {
-  function generateHash(components) {
-    const values = components.map(function(component) {
-      return component.value;
-    });
-    return Fingerprint2.x64hash128(values.join(""), 31);
-  }
+async function getFingerprint() {
+  // Initialize an agent at application startup.
+  const fpPromise = FingerprintJS.load();
 
-  return new Promise(resolve => {
-    if (window.requestIdleCallback) {
-      requestIdleCallback(function() {
-        Fingerprint2.get(function(components) {
-          resolve(generateHash(components));
-        });
-      });
-    } else {
-      setTimeout(function() {
-        Fingerprint2.get(function(components) {
-          resolve(generateHash(components));
-        });
-      }, 500);
-    }
-  });
+  // Get the visitor identifier when you need it.
+  const fp = await fpPromise;
+  const result = await fp.get();
+  return result.visitorId;
 }
 
 function getOppositeColor(color) {
